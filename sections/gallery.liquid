@@ -1,0 +1,297 @@
+{%- comment -%}
+  Section: Image Gallery
+  Description: A responsive grid gallery with animated tiles and staggered reveal effects.
+  This version uses standard CSS classes instead of Tailwind CSS.
+{%- endcomment -%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  .gallery-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2rem; /* mobile margin */
+  }
+
+  .gallery-header__description {
+    margin-top: 1rem;
+    max-width: 42rem;
+  }
+
+  .gallery-grid {
+    display: grid;
+    /* Uses Liquid variables for dynamic columns and gaps */
+    grid-template-columns: repeat({{ section.settings.columns_mobile | default: 2 }}, 1fr);
+    gap: 1rem; /* mobile gap */
+  }
+
+  .gallery-item {
+    aspect-ratio: {{ section.settings.aspect_ratio }};
+    overflow: hidden;
+    border-radius: {{ section.settings.image_border_radius | default: 8 }}px;
+  }
+
+  .gallery-item__link {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .gallery-item__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .gallery-item:hover .gallery-item__image {
+    transform: scale(1.05);
+  }
+
+  /* Responsive styles for desktop */
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+    .gallery-header {
+      margin-bottom: 3rem; /* desktop margin */
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat({{ section.settings.columns_desktop | default: 3 }}, 1fr);
+      gap: 1.5rem; /* desktop gap */
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign fetch_priority = 'auto'
+  if section.index == 1
+    assign fetch_priority = 'high'
+  endif
+
+  assign columns_mobile = section.settings.columns_mobile | default: 2
+  assign columns_desktop = section.settings.columns_desktop | default: 3
+-%}
+
+{%- if section.blocks.size > 0 -%}
+  <div class="color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
+    <div class="page-width">
+      {%- comment -%} Gallery Heading {%- endcomment -%}
+      {%- unless section.settings.heading == blank -%}
+        <div class="gallery-header">
+          <h2 class="inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            {{ section.settings.heading }}
+          </h2>
+          {%- unless section.settings.description == blank -%}
+            <div
+              class="gallery-header__description rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+              {% if settings.animations_reveal_on_scroll %}
+                style="animation-delay: 0.2s;"
+              {% endif %}
+            >
+              {{ section.settings.description }}
+            </div>
+          {%- endunless -%}
+        </div>
+      {%- endunless -%}
+
+      {%- comment -%} Gallery Grid {%- endcomment -%}
+      <div class="gallery-grid">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.gallery_image != blank -%}
+            <div
+              class="gallery-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}"
+              {{ block.shopify_attributes }}
+              {% if settings.animations_reveal_on_scroll %}
+                data-cascade
+                style="--animation-order: {{ forloop.index }};"
+              {% endif %}
+            >
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" class="gallery-item__link">
+              {%- endif -%}
+
+              {{
+                block.settings.gallery_image
+                | image_url: width: 900
+                | image_tag:
+                  class: 'gallery-item__image',
+                  loading: 'lazy',
+                  fetchpriority: fetch_priority,
+                  widths: '300, 600, 900, 1200',
+                  sizes: '(max-width: 749px) calc((100vw - 2rem) / '
+                | append: columns_mobile
+                | append: '), calc((100vw - 5rem) / '
+                | append: columns_desktop
+                | append: ')', alt: block.settings.alt_text
+              }}
+
+              {%- if block.settings.link != blank -%}
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Image Gallery",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Image Gallery",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" },
+        { "value": "hxl", "label": "Extra large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2,
+      "label": "Columns on mobile"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3,
+      "label": "Columns on desktop"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "options": [
+        { "value": "1 / 1", "label": "Square (1:1)" },
+        { "value": "4 / 5", "label": "Portrait (4:5)" },
+        { "value": "5 / 4", "label": "Landscape (5:4)" },
+        { "value": "3 / 2", "label": "Landscape (3:2)" },
+        { "value": "16 / 9", "label": "Wide (16:9)" }
+      ],
+      "default": "4 / 5",
+      "label": "Image aspect ratio"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Image border radius",
+      "default": 8,
+      "info": "Controls the corner radius of gallery images"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "gallery_image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Image alt text",
+          "default": "Gallery image",
+          "info": "Describe the image for accessibility"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Optional link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Gallery",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

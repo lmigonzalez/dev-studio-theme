@@ -1,0 +1,54 @@
+{% if cart == empty %}
+  {% if section.settings.cart_icon_empty != blank %}
+    <img src="{{ section.settings.cart_icon_empty | image_url: width: 40 }}" alt="{{ 'templates.cart.cart' | t }}" width="{{ section.settings.cart_icon_size }}" height="{{ section.settings.cart_icon_size }}" loading="lazy">
+  {% else %}
+    <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
+  {% endif %}
+{% else %}
+  {% if section.settings.cart_icon != blank %}
+    <img src="{{ section.settings.cart_icon | image_url: width: 40 }}" alt="{{ 'templates.cart.cart' | t }}" width="{{ section.settings.cart_icon_size }}" height="{{ section.settings.cart_icon_size }}" loading="lazy">
+  {% else %}
+    <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+  {% endif %}
+{% endif %}
+
+<span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+{%- if cart != empty -%}
+  <div class="cart-count-bubble">
+    {%- if cart.item_count < 100 -%}
+      <span aria-hidden="true">{{ cart.item_count }}</span>
+    {%- endif -%}
+    <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Cart Icon Bubble",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "cart_icon",
+      "label": "Cart icon (with items)",
+      "info": "Upload a custom icon to display when cart has items. Leave blank to use default."
+    },
+    {
+      "type": "image_picker",
+      "id": "cart_icon_empty",
+      "label": "Cart icon (empty)",
+      "info": "Upload a custom icon to display when cart is empty. Leave blank to use default."
+    },
+    {
+      "type": "range",
+      "id": "cart_icon_size",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Cart icon size",
+      "default": 20,
+      "info": "Size applies to custom cart icons only"
+    }
+  ]
+}
+{% endschema %}

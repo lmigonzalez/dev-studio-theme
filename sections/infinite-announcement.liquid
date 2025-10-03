@@ -1,0 +1,152 @@
+<section id="infinite-announcement-{{ section.id }}" class="infinite-announcement">
+  <div class="marquee" style="--marquee-duration: {{ section.settings.speed }}s">
+    <div class="marquee__inner">
+      <a href="{{ section.settings.link_url }}" class="marquee__link">{{ section.settings.link_text }}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+    .infinite-announcement{
+        background-color: {{ section.settings.bg_color }};
+        color: {{ section.settings.text_color }};
+    }
+    .infinite-announcement a{
+        color: {{ section.settings.text_color }};
+        font-weight: {{ section.settings.font_weight }};
+    }
+  /* hide overflow */
+  #infinite-announcement-{{ section.id }} .marquee {
+    overflow: hidden;
+  }
+  /* flex so items line up, will be cloned in JS */
+  #infinite-announcement-{{ section.id }} .marquee__inner {
+    display: flex;
+    white-space: nowrap;
+    will-change: transform;
+    animation: marquee-linear var(--marquee-duration) linear infinite;
+  }
+  /* spacing and styling */
+  #infinite-announcement-{{ section.id }} .marquee__link {
+    flex-shrink: 0;
+    margin-right: 3rem;
+    text-decoration: none;
+  }
+  /* slide entire inner container by half its width each cycle */
+  @keyframes marquee-linear {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const section = document.getElementById('infinite-announcement-{{ section.id }}');
+    const marqueeInner = section.querySelector('.marquee__inner');
+    const containerWidth = section.querySelector('.marquee').offsetWidth;
+
+    // measure one item (including margin)
+    const item = marqueeInner.children[0];
+    const style = getComputedStyle(item);
+    const itemWidth = item.offsetWidth + parseFloat(style.marginRight);
+
+    // calculate how many we need to fill—and one extra for smoothness
+    const needed = Math.ceil(containerWidth / itemWidth) + 1;
+
+    // clone that many times
+    for (let i = 0; i < needed; i++) {
+      marqueeInner.appendChild(item.cloneNode(true));
+    }
+
+    // once doubled, set inner width to 200% so 50% shift works
+    marqueeInner.style.width = '200%';
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Infinite Announcement",
+  "settings": [
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link text",
+      "default": "Your announcement here"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL",
+      "default": "/"
+    },
+    {
+      "type": "number",
+      "id": "speed",
+      "label": "Scroll speed (seconds)",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#B21F1D"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "default": "700",
+      "options": [
+        {
+          "value": "100",
+          "label": "Thin (100)"
+        },
+        {
+          "value": "200",
+          "label": "Extra-light (200)"
+        },
+        {
+          "value": "300",
+          "label": "Light (300)"
+        },
+        {
+          "value": "400",
+          "label": "Normal (400)"
+        },
+        {
+          "value": "500",
+          "label": "Medium (500)"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold (600)"
+        },
+        {
+          "value": "700",
+          "label": "Bold (700)"
+        },
+        {
+          "value": "800",
+          "label": "Extra-bold (800)"
+        },
+        {
+          "value": "900",
+          "label": "Black (900)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Infinite Announcement",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

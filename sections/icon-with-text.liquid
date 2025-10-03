@@ -1,0 +1,311 @@
+{%- comment -%}
+  This version uses standard CSS classes instead of Tailwind CSS.
+  - Tailwind classes like `flex`, `text-center`, `mb-10` have been removed from the HTML.
+  - They are replaced by BEM-style classes like `icons-with-text__grid`, `icons-with-text__header`, etc.
+  - All styling is now centralized in the <style> block.
+{%- endcomment -%}
+
+{%- style -%}
+  /* Section padding settings */
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  /* Main header for the section */
+  .icons-with-text__header {
+    text-align: center;
+    margin-bottom: 4rem; /* 40px - generous space before blocks */
+  }
+
+  /* Grid container for the icon blocks */
+  .icons-with-text__grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch; /* Make all blocks same height */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;  /* 15px */
+    padding-right: 1.5rem; /* 15px */
+    gap: {{ section.settings.gap | divided_by: 10.0 }}rem; /* Convert px to rem (62.5% technique) */
+  }
+
+  /* Individual icon block styling */
+  .icon-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem; /* 20px - consistent with other sections */
+    border-radius: {{ section.settings.block_border_radius | default: 8 }}px;
+    transition: all 300ms ease-in-out;
+  }
+
+  /* Wrapper for the image */
+  .icon-block__image-wrapper {
+    margin-bottom: 1.5rem; /* 15px - space between image and title */
+  }
+
+  /* Image styling */
+  .icon-block__image {
+    max-width: {{ section.settings.image_max_width | divided_by: 10.0 }}rem; /* Convert px to rem */
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Block title styling */
+  .icon-block__title {
+    font-size: {{ section.settings.block_heading_size | divided_by: 10.0 }}rem; /* Convert px to rem */
+    font-weight: 600;
+    margin-bottom: 1rem; /* 10px - space between title and description */
+    color: rgb(var(--color-foreground)); /* Use theme colors */
+  }
+
+  /* Block description styling */
+  .icon-block__description {
+    font-size: {{ section.settings.paragraph_size | divided_by: 10.0 }}rem; /* Convert px to rem */
+    line-height: 1.625; /* Equivalent to leading-relaxed */
+    color: rgba(var(--color-foreground), 0.75); /* Use theme colors with transparency */
+  }
+
+  /* Responsive adjustments */
+  @media screen and (min-width: 750px) {
+    .icons-with-text__header {
+      margin-bottom: 5rem; /* 50px - more space on larger screens */
+    }
+
+    .icon-block {
+      padding: 2.5rem; /* 25px - more padding on tablet */
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .icons-with-text__grid {
+      flex-wrap: nowrap; /* Keep all blocks in one row on big screens */
+    }
+
+    .icons-with-text__header {
+      margin-bottom: 6rem; /* 60px */
+    }
+
+    .icon-block {
+      padding: 3rem; /* 30px - generous padding on desktop */
+    }
+
+    .icon-block__image-wrapper {
+      margin-bottom: 2rem; /* 20px */
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    {%- if section.settings.section_header != blank -%}
+      <h2
+        class="icons-with-text__header{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+        id="icons-header"
+      >
+        {{ section.settings.section_header }}
+      </h2>
+    {%- endif -%}
+
+    <div
+      class="icons-with-text__grid"
+      style="--gap: {{ section.settings.gap }}px;"
+    >
+      {%- for block in section.blocks -%}
+        <div
+          class="
+            icon-block
+            {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}
+            {% if settings.animations_hover_elements == 'vertical-lift' %} animate--hover-vertical-lift{% endif %}
+            {% if settings.animations_hover_elements == '3d-lift' %} animate--hover-3d-lift{% endif %}
+          "
+          style="background: {{ block.settings.block_bg_color }};"
+          {{ block.shopify_attributes }}
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+            style="background: {{ block.settings.block_bg_color }}; --animation-order: {{ forloop.index }};"
+          {% endif %}
+        >
+          {%- if block.settings.image != blank -%}
+            <div class="icon-block__image-wrapper{% if block.settings.animate_image and settings.animations_reveal_on_scroll %} animate--zoom-in{% endif %}">
+              {{
+                block.settings.image
+                | image_url: width: 120
+                | image_tag: loading: 'lazy', alt: block.settings.title, class: 'icon-block__image'
+              }}
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.title != blank -%}
+            <h3 class="icon-block__title">
+              {{ block.settings.title }}
+            </h3>
+          {%- endif -%}
+
+          {%- if block.settings.description != blank -%}
+            <p class="icon-block__description">
+              {{ block.settings.description }}
+            </p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Icons With Text",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_header",
+      "label": "Section Header"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        { "value": "background-1", "label": "Background 1" },
+        { "value": "background-2", "label": "Background 2" },
+        { "value": "accent-1", "label": "Accent 1" },
+        { "value": "accent-2", "label": "Accent 2" }
+      ],
+      "default": "background-1",
+      "label": "Color scheme"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Gap between blocks",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "image_max_width",
+      "min": 20,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Max image width",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "block_heading_size",
+      "min": 16,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Block heading font size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "paragraph_size",
+      "min": 12,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Paragraph font size",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "block_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Block border radius",
+      "default": 8,
+      "info": "Controls the corner radius of icon blocks"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Icon Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "checkbox",
+          "id": "animate_image",
+          "label": "Enable zoom animation on scroll",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "color",
+          "id": "block_bg_color",
+          "label": "Block background color",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Icons With Text",
+      "category": "Custom",
+      "blocks": [{ "type": "row" }, { "type": "row" }, { "type": "row" }]
+    }
+  ]
+}
+{% endschema %}

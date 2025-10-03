@@ -1,0 +1,552 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "infinite_announcement_rGtGJB": {
+      "type": "infinite-announcement",
+      "name": "Infinite Announcement",
+      "settings": {
+        "link_text": "Your announcement here",
+        "link_url": "/",
+        "speed": 20,
+        "bg_color": "#b21f1d",
+        "text_color": "#ffffff",
+        "font_weight": "700"
+      }
+    },
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Browse our latest products",
+            "heading_size": "h0"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop all",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "button"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/2148922216.jpg",
+        "image_overlay_opacity": 40,
+        "image_height": "medium",
+        "image_behavior": "none",
+        "desktop_content_position": "middle-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-3",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "icon_with_text_D4g3kd": {
+      "type": "icon-with-text",
+      "blocks": {
+        "row_QGtT4q": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/games.svg",
+            "animate_image": true,
+            "title": "Versatility & Design",
+            "description": "Our MDF wall panels come in flexible, pre-painted, and static models, perfect for mdf for wall panelling projects of any style.",
+            "block_bg_color": "#ffffff"
+          }
+        },
+        "row_YiymnW": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/games.svg",
+            "animate_image": true,
+            "title": "Easy Installation & Perfect Finish",
+            "description": "Panels include terminals for a seamless look. Quick setup delivers a professional finish in homes and offices with decorative wall board solutions.",
+            "block_bg_color": "#ffffff"
+          }
+        },
+        "row_hrcKMg": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/games.svg",
+            "animate_image": true,
+            "title": "Variety of Colors & Styles",
+            "description": "Pick from 7 finishes — Ocaso, Encino Marrón, Roble Natural, Roble Chic, Luna, Catania, and Lienzo — ideal for decorative wall panels or luxury wall paneling.",
+            "block_bg_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "row_QGtT4q",
+        "row_YiymnW",
+        "row_hrcKMg"
+      ],
+      "name": "Icons With Text",
+      "settings": {
+        "section_header": "",
+        "color_scheme": "accent-2",
+        "gap": 50,
+        "image_max_width": 50,
+        "block_heading_size": 20,
+        "paragraph_size": 16,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "block_border_radius": 8
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "all",
+        "products_to_show": 4,
+        "icon": "",
+        "title": "<strong>Featured products</strong>",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 44,
+        "padding_bottom": 36
+      }
+    },
+    "hero_grid_eVfbBq": {
+      "type": "hero-grid",
+      "blocks": {
+        "feature_JyXK7e": {
+          "type": "feature",
+          "settings": {
+            "icon": "",
+            "title": "Free Shipping",
+            "description": "Free shipping on all orders over $100"
+          }
+        },
+        "feature_GEAcJf": {
+          "type": "feature",
+          "settings": {
+            "icon": "",
+            "title": "Secure Checkout",
+            "description": "Secure checkout process with SSL encryption"
+          }
+        }
+      },
+      "block_order": [
+        "feature_JyXK7e",
+        "feature_GEAcJf"
+      ],
+      "name": "Hero Grid",
+      "settings": {
+        "image": "shopify://shop_images/105.jpg",
+        "enable_zoom_animation": true,
+        "heading": "Get Ready for Year-End Business Travel",
+        "heading_size": "h1",
+        "text": "<p>Your trusted partner for seamless, secure, and efficient business travel. Explore our services and discover how we can help you navigate the world of business travel with confidence.</p>",
+        "button_label": "Get Started",
+        "button_link": "",
+        "button_style_secondary": false,
+        "color_scheme": "scheme-1",
+        "left_column_bg": "#f3f3f3",
+        "left_column_text": "#000000",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "product_slider_66QbFH": {
+      "type": "product-slider",
+      "name": "Product Slider",
+      "settings": {
+        "title": "<strong>Featured Collection</strong>",
+        "heading_size": "h1",
+        "icon": "",
+        "collection": "all-products",
+        "products_to_show": 10,
+        "color_scheme": "",
+        "show_view_all": true,
+        "show_pagination": false,
+        "enable_autoplay": false,
+        "autoplay_delay": 500,
+        "enable_loop": false,
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": "standard",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collection_tab_V8gfnm": {
+      "type": "collection-tab",
+      "blocks": {
+        "tab_MCgt8V": {
+          "type": "tab",
+          "settings": {
+            "tab_name": "Best Sellers",
+            "tab_id": "best-sellers",
+            "collection": "all-products",
+            "products_to_show": 6,
+            "show_all_button": true,
+            "show_all_text": "SHOW ALL PRODUCTS"
+          }
+        },
+        "tab_CrfKhK": {
+          "type": "tab",
+          "settings": {
+            "tab_name": "Novelties",
+            "tab_id": "novelties",
+            "collection": "all-products",
+            "products_to_show": 6,
+            "show_all_button": true,
+            "show_all_text": "SHOW ALL PRODUCTS"
+          }
+        }
+      },
+      "block_order": [
+        "tab_MCgt8V",
+        "tab_CrfKhK"
+      ],
+      "name": "Product Tabs Carousel",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": "standard",
+        "section_background_color": "rgba(0,0,0,0)",
+        "enable_autoplay": true,
+        "autoplay_delay": 1000,
+        "enable_loop": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "one_product_ra9zrA": {
+      "type": "one-product",
+      "name": "Featured Product",
+      "settings": {
+        "featured_product": "leather-laptop-backpack",
+        "heading_size": "h1",
+        "max_width": 1400,
+        "image_position": "row",
+        "image_ratio": "1 / 1",
+        "color_scheme": "scheme-1",
+        "card_border_radius": 0,
+        "card_shadow": "none",
+        "card_shadow_hover": "none",
+        "card_bg_color": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "faq_4KdtNN": {
+      "type": "faq",
+      "blocks": {
+        "question_BXGnHb": {
+          "type": "question",
+          "settings": {
+            "question": "What size should I order for clothing?",
+            "answer": "<p>Please refer to our size guide for accurate measurements.</p>"
+          }
+        },
+        "question_WFD6yB": {
+          "type": "question",
+          "settings": {
+            "question": "How can I track my order status?",
+            "answer": "<p>You can track your order using the tracking number sent to your email.</p>"
+          }
+        },
+        "question_JGYf4f": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer international shipping options?",
+            "answer": "<p>Yes, we ship to most countries worldwide.</p>"
+          }
+        },
+        "question_kPWTR9": {
+          "type": "question",
+          "settings": {
+            "question": "What is your return and exchange policy?",
+            "answer": "<p>We offer 30-day returns on most items in original condition.</p>"
+          }
+        },
+        "question_dRqNfY": {
+          "type": "question",
+          "settings": {
+            "question": "How can I cancel my order?",
+            "answer": "<p>Contact our support team within 24 hours of placing your order.</p>"
+          }
+        },
+        "question_hXTddE": {
+          "type": "question",
+          "settings": {
+            "question": "Are the products on sale final sale?",
+            "answer": "<p>Sale items may have different return policies. Check product details.</p>"
+          }
+        },
+        "question_UKCCJ3": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer gift cards for purchases?",
+            "answer": "<p>Yes, gift cards are available in various denominations.</p>"
+          }
+        },
+        "question_JTQmCk": {
+          "type": "question",
+          "settings": {
+            "question": "How do I care for my garments?",
+            "answer": "<p>Follow the care instructions on the product label.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question_BXGnHb",
+        "question_WFD6yB",
+        "question_JGYf4f",
+        "question_kPWTR9",
+        "question_dRqNfY",
+        "question_hXTddE",
+        "question_UKCCJ3",
+        "question_JTQmCk"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "heading": "<strong>Frequently Asked Questions</strong>",
+        "subheading": "Find answers to common inquiries about products, shipping, returns, and customer support.",
+        "button_label": "Contact Us",
+        "button_link": "shopify://pages/contact",
+        "heading_size": "h1",
+        "section_color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "block_border_radius": 0
+      }
+    },
+    "testimonials_YbMwFr": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_U9GiaV": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/2149186122.jpg",
+            "rating": 5,
+            "text": "Skena.co delivers exceptional fashion with a perfect blend of style, quality, and affordability. Trendy pieces for every occasion, making it my go-to fashion destination!",
+            "author": "Cameron Williamson"
+          }
+        },
+        "testimonial_w9WnAf": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/2149186132.jpg",
+            "rating": 5,
+            "text": "Amazing quality and fast shipping! The clothing exceeded my expectations. Will definitely shop here again.",
+            "author": "Sarah Johnson"
+          }
+        },
+        "testimonial_NP4Ybi": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/2149186105.jpg",
+            "rating": 5,
+            "text": "Best online shopping experience! Great customer service and beautiful products that match the photos perfectly.",
+            "author": "Michael Chen"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_U9GiaV",
+        "testimonial_w9WnAf",
+        "testimonial_NP4Ybi"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "heading": "<strong>Testimonial</strong>",
+        "heading_size": "h1",
+        "subheading": "Customer testimonials showcasing real experiences, building trust and confidence in our products.",
+        "color_scheme": "scheme-4",
+        "autoplay": true,
+        "autoplay_delay": 5,
+        "loop": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "product_showcase_YJcaMU": {
+      "type": "product-showcase",
+      "blocks": {
+        "feature_Kinkyg": {
+          "type": "feature",
+          "settings": {
+            "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewbox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4\"></path></svg>",
+            "title": "SPACIOUS DESIGN",
+            "text": "Holds essentials and extras with ample organized space.",
+            "background_color": "#ffffff",
+            "text_color": "#000000"
+          }
+        },
+        "feature_9DQRTc": {
+          "type": "feature",
+          "settings": {
+            "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewbox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z\"></path></svg>",
+            "title": "WEATHER RESISTANT",
+            "text": "Durable material keeps belongings safe in any weather.",
+            "background_color": "#ffffff",
+            "text_color": "#000000"
+          }
+        },
+        "feature_9Ahdf3": {
+          "type": "feature",
+          "settings": {
+            "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewbox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5\"></path></svg>",
+            "title": "COMFORT FIT",
+            "text": "Padded straps offer all-day comfort and support.",
+            "background_color": "#ffffff",
+            "text_color": "#000000"
+          }
+        },
+        "feature_DhfkmV": {
+          "type": "feature",
+          "settings": {
+            "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewbox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z\"></path></svg>",
+            "title": "TECH-FRIENDLY",
+            "text": "Dedicated compartments protect laptops and electronic devices.",
+            "background_color": "#ffffff",
+            "text_color": "#000000"
+          }
+        }
+      },
+      "block_order": [
+        "feature_Kinkyg",
+        "feature_9DQRTc",
+        "feature_9Ahdf3",
+        "feature_DhfkmV"
+      ],
+      "name": "Product Showcase",
+      "settings": {
+        "label": "BEST PRODUCT",
+        "heading": "<strong>GO-TO TRAVEL PACK</strong>",
+        "heading_size": "h1",
+        "description": "Designed for adventurers, this pack offers ample space, durability, and comfort for all your journeys ahead.",
+        "product": "eco-friendly-backpack",
+        "button_label": "View Product",
+        "button_background_color": "#242833",
+        "button_text_color": "#ffffff",
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "email_signup_banner_f3Pw9M": {
+      "type": "email-signup-banner",
+      "blocks": {
+        "stat_mHNUBM": {
+          "type": "stat",
+          "settings": {
+            "stat_value": "80+",
+            "stat_label": "Product release",
+            "stat_size": "h0"
+          }
+        },
+        "stat_tGfpa6": {
+          "type": "stat",
+          "settings": {
+            "stat_value": "120K",
+            "stat_label": "Customer in world",
+            "stat_size": "h0"
+          }
+        },
+        "heading_XF9EKJ": {
+          "type": "heading",
+          "settings": {
+            "heading": "Subscribe to our newsletter",
+            "heading_size": "h2"
+          }
+        },
+        "email_form_Vppfm8": {
+          "type": "email_form",
+          "settings": {
+            "placeholder": "Enter your email",
+            "button_label": "Subscribe",
+            "success_message": "Thanks for subscribing!"
+          }
+        }
+      },
+      "block_order": [
+        "stat_mHNUBM",
+        "stat_tGfpa6",
+        "heading_XF9EKJ",
+        "email_form_Vppfm8"
+      ],
+      "name": "Email Signup Banner",
+      "settings": {
+        "show_background_image": true,
+        "image": "shopify://shop_images/4438.jpg",
+        "image_overlay_opacity": 30,
+        "image_height": "large"
+      }
+    },
+    "separator_yFBgdx": {
+      "type": "separator",
+      "name": "Separator",
+      "settings": {
+        "show_separator": true,
+        "separator_style": "solid",
+        "separator_width": 100,
+        "separator_thickness": 2,
+        "full_width": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    }
+  },
+  "order": [
+    "infinite_announcement_rGtGJB",
+    "image_banner",
+    "icon_with_text_D4g3kd",
+    "featured_collection",
+    "hero_grid_eVfbBq",
+    "product_slider_66QbFH",
+    "collection_tab_V8gfnm",
+    "one_product_ra9zrA",
+    "faq_4KdtNN",
+    "testimonials_YbMwFr",
+    "product_showcase_YJcaMU",
+    "email_signup_banner_f3Pw9M",
+    "separator_yFBgdx"
+  ]
+}

@@ -1,0 +1,422 @@
+{{ 'component-accordion.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .faq-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 3rem;
+    margin-bottom: 6rem;
+  }
+
+  .faq-header__content {
+    flex: 1;
+  }
+
+  .faq-header__title {
+    margin: 0 0 1.6rem 0;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+
+  .faq-header__subtitle {
+    margin: 0;
+    color: rgba(var(--color-foreground), 0.75);
+    font-size: 1.6rem;
+    line-height: 1.6;
+    max-width: 500px;
+  }
+
+  .faq-header__button {
+    flex-shrink: 0;
+  }
+
+  .faq-header__link {
+    text-decoration: none;
+    color: inherit;
+    font-size: 2rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: opacity 0.2s ease;
+  }
+
+  .faq-header__link:hover {
+    opacity: 0.7;
+  }
+
+  .faq-header__arrow {
+    font-size: 2rem;
+    transition: transform 0.2s ease;
+  }
+
+  .faq-header__link:hover .faq-header__arrow {
+    transform: translateX(2px);
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+    align-items: start;
+  }
+
+  @media screen and (min-width: 750px) {
+    .faq-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.4rem;
+    }
+  }
+
+  .faq-item {
+    background: #F5F5F5;
+    border-radius: {{ section.settings.block_border_radius }}px;
+    overflow: hidden;
+  }
+
+  .faq-item__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+    cursor: pointer;
+    list-style: none;
+    gap: 1.6rem;
+  }
+
+  .faq-item__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item__number {
+    font-size: 1.4rem;
+    color: rgba(var(--color-foreground), 0.5);
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .faq-item__question {
+    flex: 1;
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: rgb(var(--color-foreground));
+  }
+
+  .faq-item__icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item[open] .faq-item__icon {
+    transform: rotate(180deg);
+  }
+
+  .faq-item__answer {
+    padding: 0 2rem 2rem 5.2rem;
+    color: rgba(var(--color-foreground), 0.75);
+    line-height: 1.6;
+    font-size: 1.4rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .faq-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .faq-header__button {
+      display: flex;
+      justify-content: flex-start;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.section_color_scheme }} gradient">
+  <div class="section-{{ section.id }}-padding">
+    <div class="page-width">
+      <div class="faq-header{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+        <div class="faq-header__content">
+          {%- if section.settings.heading != blank -%}
+            <div class="title-wrapper{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+              <h2 class="title inline-richtext {{ section.settings.heading_size }}">
+                {{ section.settings.heading }}
+              </h2>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.subheading != blank -%}
+            <p
+              class="faq-header__subtitle{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+              {% if settings.animations_reveal_on_scroll %}
+                style="animation-delay: 0.1s;"
+              {% endif %}
+            >
+              {{ section.settings.subheading }}
+            </p>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.button_label != blank -%}
+          <div
+            class="faq-header__button{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              style="animation-delay: 0.2s;"
+            {% endif %}
+          >
+            <a
+              {% if section.settings.button_link == blank %}
+                role="link" aria-disabled="true"
+              {% else %}
+                href="{{ section.settings.button_link }}"
+              {% endif %}
+              class="button button--primary"
+            >
+              {{ section.settings.button_label | escape }}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="faq-grid">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'question' -%}
+                <details
+                  class="faq-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}"
+                  {{ block.shopify_attributes }}
+                  {% if settings.animations_reveal_on_scroll %}
+                    data-cascade
+                    style="animation-delay: {{ forloop.index0 | times: 0.1 }}s;"
+                  {% endif %}
+                >
+                  <summary class="faq-item__summary">
+                    <span class="faq-item__number">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                    <h3 class="faq-item__question">{{ block.settings.question }}</h3>
+                    <svg class="faq-item__icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </summary>
+                  {%- if block.settings.answer != blank -%}
+                    <div class="faq-item__answer">
+                      {{ block.settings.answer }}
+                    </div>
+                  {%- endif -%}
+                </details>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Find answers to common inquiries about products, shipping, returns, and customer support."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Contact Us",
+      "info": "Optional button to display below the heading"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Section heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        },
+        {
+          "value": "hxl",
+          "label": "Extra large"
+        },
+        {
+          "value": "hxxl",
+          "label": "Extra extra large"
+        }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "color_scheme",
+      "id": "section_color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "block_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Block border radius",
+      "default": 8,
+      "info": "Controls the corner radius of FAQ blocks"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Question text"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Answer text goes here.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "What size should I order for clothing?",
+            "answer": "<p>Please refer to our size guide for accurate measurements.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How can I track my order status?",
+            "answer": "<p>You can track your order using the tracking number sent to your email.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer international shipping options?",
+            "answer": "<p>Yes, we ship to most countries worldwide.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "What is your return and exchange policy?",
+            "answer": "<p>We offer 30-day returns on most items in original condition.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How can I cancel my order?",
+            "answer": "<p>Contact our support team within 24 hours of placing your order.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Are the products on sale final sale?",
+            "answer": "<p>Sale items may have different return policies. Check product details.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer gift cards for purchases?",
+            "answer": "<p>Yes, gift cards are available in various denominations.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How do I care for my garments?",
+            "answer": "<p>Follow the care instructions on the product label.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,559 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  /* Main two-column grid layout */
+  .split-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: stretch;
+  }
+
+  /* Left column containing content and features */
+  .split-layout__column--left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 2rem;
+  }
+
+  /* Main content box with text and button */
+  .split-layout__content-box {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 3rem 2rem;
+    background-color: {{ section.settings.left_column_bg | default: '#f3f4f6' }};
+    color: {{ section.settings.left_column_text | default: '#000000' }};
+    border-radius: var(--text-boxes-radius);
+  }
+
+  .split-layout__content-box .break-words {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .split-layout__text.rte {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+
+  .split-layout__text.rte p {
+    margin: 0;
+  }
+
+  .split-layout__button {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+    padding: 1.2rem 3rem;
+    font-weight: 600;
+    font-size: 1.4rem;
+    border-radius: var(--buttons-radius);
+  }
+
+  /* Grid for the feature blocks below the main content */
+  .split-layout__features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Individual feature block styling */
+  .feature-block {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 2rem 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: {{ section.settings.left_column_bg | default: '#f3f4f6' }};
+    color: {{ section.settings.left_column_text | default: '#000000' }};
+    border-radius: var(--text-boxes-radius);
+  }
+
+  .feature-block__icon-wrapper {
+    width: 4rem;
+    height: 4rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .feature-block__icon-wrapper svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .feature-block__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+  }
+
+  .feature-block__title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+  }
+
+  .feature-block__description {
+    font-size: 1.3rem;
+    line-height: 1.5;
+    opacity: 0.75;
+  }
+
+  /* Right column image container */
+  .split-layout__image-container {
+    position: relative;
+    width: 100%;
+    min-height: 350px;
+    height: 100%;
+    border-radius: var(--media-radius);
+    overflow: hidden;
+  }
+
+  /* Image styling */
+  .split-layout__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .split-layout__placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .split-layout__placeholder-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Responsive media queries */
+  @media screen and (min-width: 640px) {
+    .split-layout__features-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .split-layout__content-box {
+      padding: 3rem;
+    }
+
+    .feature-block {
+      padding: 2.5rem 2rem;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .split-layout {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: stretch;
+    }
+
+    .split-layout__column--left {
+      gap: 2.5rem;
+    }
+
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+
+    .split-layout__content-box {
+      padding: 4rem 3rem;
+      gap: 2.5rem;
+    }
+
+    .split-layout__text.rte {
+      font-size: 1.5rem;
+    }
+
+    .split-layout__button {
+      font-size: 1.5rem;
+      padding: 1.3rem 3.5rem;
+    }
+
+    .split-layout__image-container {
+      min-height: 500px;
+    }
+
+    .feature-block {
+      padding: 3rem 2.5rem;
+      gap: 2rem;
+    }
+
+    .feature-block__icon-wrapper {
+      width: 4.5rem;
+      height: 4.5rem;
+    }
+
+    .feature-block__title {
+      font-size: 1.7rem;
+    }
+
+    .feature-block__description {
+      font-size: 1.4rem;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .split-layout {
+      gap: 4rem;
+    }
+
+    .split-layout__column--left {
+      gap: 3rem;
+    }
+
+    .split-layout__content-box {
+      padding: 5rem 4rem;
+      gap: 3rem;
+    }
+
+    .split-layout__text.rte {
+      font-size: 1.6rem;
+    }
+
+    .split-layout__button {
+      font-size: 1.6rem;
+      padding: 1.4rem 4rem;
+    }
+
+    .feature-block {
+      padding: 3.5rem 3rem;
+      gap: 2.5rem;
+    }
+
+    .feature-block__icon-wrapper {
+      width: 5rem;
+      height: 5rem;
+    }
+
+    .feature-block__title {
+      font-size: 1.8rem;
+    }
+
+    .feature-block__description {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .split-layout {
+      gap: 5rem;
+    }
+
+    .split-layout__image-container {
+      min-height: 600px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
+  <div class="page-width">
+    <div class="split-layout">
+      {%- comment -%} Left Column: Content + Features {%- endcomment -%}
+      <div class="split-layout__column--left">
+        {%- comment -%} Main Content Area {%- endcomment -%}
+        <div
+          class="split-layout__content-box{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+        >
+          {%- if section.settings.heading != blank -%}
+            <h2 class="{{ section.settings.heading_size }} break-words">
+              {{ section.settings.heading }}
+            </h2>
+          {%- endif -%}
+
+          {%- if section.settings.text != blank -%}
+            <div class="split-layout__text rte">
+              {{ section.settings.text }}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.button_label != blank -%}
+            <a
+              {% if section.settings.button_link == blank %}
+                role="link" aria-disabled="true"
+              {% else %}
+                href="{{ section.settings.button_link }}"
+              {% endif %}
+              class="split-layout__button button{% if section.settings.button_style_secondary %} button--secondary{% else %} button--primary{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}"
+            >
+              {{ section.settings.button_label | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Features Grid (2 columns) {%- endcomment -%}
+        <div class="split-layout__features-grid">
+          {%- for block in section.blocks -%}
+            <div
+              class="feature-block{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}"
+              {{ block.shopify_attributes }}
+              {% if settings.animations_reveal_on_scroll %}style="--animation-order: {{ forloop.index }};" data-cascade{% endif %}
+            >
+              {%- if block.settings.icon != blank -%}
+                <div class="feature-block__icon-wrapper">
+                  {{ block.settings.icon }}
+                </div>
+              {%- endif -%}
+
+              <div class="feature-block__content">
+                {%- if block.settings.title != blank -%}
+                  <b class="feature-block__title">
+                    {{ block.settings.title }}
+                  </b>
+                {%- endif -%}
+
+                {%- if block.settings.description != blank -%}
+                  <p class="feature-block__description" style="opacity: 0.75;">
+                    {{ block.settings.description }}
+                  </p>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- comment -%} Right Column: Image {%- endcomment -%}
+      <div
+        class="split-layout__image-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}{% if section.settings.enable_zoom_animation %} animate--zoom-in{% endif %}"
+      >
+        {%- if section.settings.image != blank -%}
+          {%- if section.settings.enable_zoom_animation -%}
+            {%- assign widths = '198, 432, 642, 900, 1284, 1800' -%}
+            {%- capture sizes -%}
+              (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 1.6667 }}px,
+              (min-width: 750px) calc((100vw - 130px) / 1.667), calc((100vw - 50px) / 1.667)
+            {%- endcapture -%}
+          {%- else -%}
+            {%- assign widths = '165, 360, 535, 750, 1070, 1500' -%}
+            {%- capture sizes -%}
+              (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px,
+              (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
+            {%- endcapture -%}
+          {%- endif -%}
+          {%- liquid
+            assign fetch_priority = 'auto'
+            if section.index == 1
+              assign fetch_priority = 'high'
+            endif
+          -%}
+          {{
+            section.settings.image
+            | image_url: width: 1500
+            | image_tag: sizes: sizes, widths: widths, fetchpriority: fetch_priority, class: 'split-layout__image'
+          }}
+        {%- else -%}
+          <div class="split-layout__placeholder">
+            {{ 'hero-apparel-1' | placeholder_svg_tag: 'split-layout__placeholder-svg' }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero Grid",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_zoom_animation",
+      "label": "Enable zoom animation on scroll",
+      "default": true
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "GET READY FOR YEAR-END BUSINESS TRAVEL",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        },
+        {
+          "value": "hxl",
+          "label": "Extra large"
+        },
+        {
+          "value": "hxxl",
+          "label": "Extra extra large"
+        }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "default": "<p>Prepare for year-end business travel with ease. Maximize productivity, streamline plans, and enjoy stress-free journeys.</p>",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "default": "Shop Now",
+      "label": "Button label",
+      "info": "Leave the label blank to hide the button."
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_style_secondary",
+      "default": false,
+      "label": "Use outline button style"
+    },
+    {
+      "type": "header",
+      "content": "Section colors"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Left column colors"
+    },
+    {
+      "type": "color",
+      "id": "left_column_bg",
+      "label": "Background color",
+      "default": "#f3f4f6"
+    },
+    {
+      "type": "color",
+      "id": "left_column_text",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon SVG",
+          "info": "Paste SVG code here"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "default": "Feature Title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "default": "Feature description text",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Grid",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "FREE SHIPPING",
+            "description": "Instant help from knowledgeable representatives available."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "SECURE CHECKOUT",
+            "description": "Enjoy a safe and smooth purchasing experience every time."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

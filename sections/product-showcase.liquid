@@ -1,0 +1,545 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .product-showcase {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .product-showcase__header {
+    text-align: center;
+    margin-bottom: 60px;
+  
+  }
+
+  .product-showcase__label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    color: rgb(var(--color-foreground));
+  }
+
+  .product-showcase__title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .product-showcase__description {
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+    color: rgba(var(--color-foreground), 0.75);
+  }
+
+  .product-showcase__content {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+  }
+
+  .product-showcase__features--left,
+  .product-showcase__features--right {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+  }
+
+  .product-showcase__feature {
+    text-align: center;
+    padding: 30px 20px;
+    border: 1px solid rgba(var(--color-foreground), 0.1);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .product-showcase__feature:hover {
+    border-color: rgba(var(--color-foreground), 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+  }
+
+  .product-showcase__feature-icon {
+    font-size: 32px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-showcase__feature-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .product-showcase__feature-title {
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .product-showcase__feature-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(var(--color-foreground), 0.75);
+  }
+
+  .product-showcase__image-wrapper {
+    position: relative;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-showcase__image-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    transition: transform 0.3s ease;
+  }
+
+  .product-showcase__image-container:hover {
+    transform: scale(1.05);
+  }
+
+  .product-showcase__image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .product-showcase__button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .product-showcase__image-container:hover .product-showcase__button {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+
+  .product-showcase__button-link {
+    display: inline-block;
+    padding: 12px 24px;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-size: 13px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: 2px solid transparent;
+    min-width: 140px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #000000;
+  }
+
+  .product-showcase__button-link:hover {
+    transform: scale(1.08);
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  @media screen and (max-width: 989px) {
+    .product-showcase__content {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .product-showcase__features--left,
+    .product-showcase__features--right {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .product-showcase__feature {
+      flex: 1;
+      min-width: calc(50% - 10px);
+    }
+
+    .product-showcase__title {
+      font-size: 36px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-showcase__feature {
+      min-width: 100%;
+    }
+
+    .product-showcase__title {
+      font-size: 28px;
+    }
+
+    .product-showcase__button-link {
+      padding: 10px 20px;
+      font-size: 12px;
+      min-width: 120px;
+      backdrop-filter: blur(6px);
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="section-{{ section.id }}-padding">
+    <div class="page-width">
+      <div class="product-showcase">
+        {%- unless section.settings.heading == blank -%}
+          <div class="title-wrapper{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" style="text-align: center;">
+            <h2 class="title inline-richtext {{ section.settings.heading_size }}">
+              {{ section.settings.heading }}
+            </h2>
+          </div>
+        {%- endunless -%}
+
+        <div
+          class="product-showcase__header{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            style="animation-delay: 0.1s;"
+          {% endif %}
+        >
+          {%- if section.settings.label != blank -%}
+            <p class="product-showcase__label">{{ section.settings.label }}</p>
+          {%- endif -%}
+          {%- if section.settings.description != blank -%}
+            <p class="product-showcase__description">{{ section.settings.description }}</p>
+          {%- endif -%}
+        </div>
+
+        <div
+          class="product-showcase__content{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            style="animation-delay: 0.2s;"
+          {% endif %}
+        >
+          {%- assign product = section.settings.product -%}
+
+          <!-- Left Features -->
+          <div class="product-showcase__features--left">
+            {%- for block in section.blocks limit: 2 -%}
+              {%- if block.type == 'feature' -%}
+                <div
+                  class="product-showcase__feature"
+                  style="background: {{ block.settings.background_color }}; color: {{ block.settings.text_color }};"
+                  {{ block.shopify_attributes }}
+                >
+                  {%- if block.settings.icon != blank -%}
+                    <div class="product-showcase__feature-icon" style="color: {{ block.settings.text_color }};">
+                      {{ block.settings.icon }}
+                    </div>
+                  {%- endif -%}
+
+                  {%- if block.settings.title != blank -%}
+                    <h4 class="product-showcase__feature-title" style="color: {{ block.settings.text_color }};">
+                      {{ block.settings.title }}
+                    </h4>
+                  {%- endif -%}
+
+                  {%- if block.settings.text != blank -%}
+                    <p class="product-showcase__feature-text" style="color: {{ block.settings.text_color }};">
+                      {{ block.settings.text }}
+                    </p>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+
+          <!-- Product Image -->
+          <div class="product-showcase__image-wrapper">
+            {%- if product != blank -%}
+              <div class="product-showcase__image-container">
+                {%- if product.featured_media -%}
+                  {{
+                    product.featured_media
+                    | image_url: width: 1000
+                    | image_tag: loading: 'lazy', class: 'product-showcase__image', alt: product.featured_media.alt
+                    | escape
+                  }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'product-showcase__image' }}
+                {%- endif -%}
+
+                <div class="product-showcase__button">
+                  <a
+                    href="{{ product.url }}"
+                    class="product-showcase__button-link"
+                  >
+                    {{ section.settings.button_label }}
+                  </a>
+                </div>
+              </div>
+            {%- else -%}
+              <div class="product-showcase__image-container">
+                {{ 'product-1' | placeholder_svg_tag: 'product-showcase__image' }}
+              </div>
+            {%- endif -%}
+          </div>
+
+          <!-- Right Features -->
+          <div class="product-showcase__features--right">
+            {%- for block in section.blocks offset: 2 limit: 2 -%}
+              {%- if block.type == 'feature' -%}
+                <div
+                  class="product-showcase__feature"
+                  style="background: {{ block.settings.background_color }}; color: {{ block.settings.text_color }};"
+                  {{ block.shopify_attributes }}
+                >
+                  {%- if block.settings.icon != blank -%}
+                    <div class="product-showcase__feature-icon" style="color: {{ block.settings.text_color }};">
+                      {{ block.settings.icon }}
+                    </div>
+                  {%- endif -%}
+
+                  {%- if block.settings.title != blank -%}
+                    <h4 class="product-showcase__feature-title" style="color: {{ block.settings.text_color }};">
+                      {{ block.settings.title }}
+                    </h4>
+                  {%- endif -%}
+
+                  {%- if block.settings.text != blank -%}
+                    <p class="product-showcase__feature-text" style="color: {{ block.settings.text_color }};">
+                      {{ block.settings.text }}
+                    </p>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product Showcase",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "BEST PRODUCT"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "GO-TO TRAVEL PACK"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        },
+        {
+          "value": "hxl",
+          "label": "Extra Large"
+        },
+        {
+          "value": "hxxl",
+          "label": "Extra Extra Large"
+        }
+      ],
+      "default": "h1",
+      "label": "Heading Size"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Designed for adventurers, this pack offers ample space, durability, and comfort for all your journeys ahead."
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "View Product"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Icon (SVG)",
+          "default": "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7' /></svg>"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Feature Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Feature description goes here."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#000000"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Showcase",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4' /></svg>",
+            "title": "SPACIOUS DESIGN",
+            "text": "Holds essentials and extras with ample organized space.",
+            "background_color": "#FFFFFF",
+            "text_color": "#000000"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z' /></svg>",
+            "title": "WEATHER RESISTANT",
+            "text": "Durable material keeps belongings safe in any weather.",
+            "background_color": "#FFFFFF",
+            "text_color": "#000000"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5' /></svg>",
+            "title": "COMFORT FIT",
+            "text": "Padded straps offer all-day comfort and support.",
+            "background_color": "#FFFFFF",
+            "text_color": "#000000"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' /></svg>",
+            "title": "TECH-FRIENDLY",
+            "text": "Dedicated compartments protect laptops and electronic devices.",
+            "background_color": "#FFFFFF",
+            "text_color": "#000000"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
