@@ -4,11 +4,8 @@
   Accepts:
   - card_product: {Object} Product Liquid object (optional)
   - media_aspect_ratio: {String} Size of the product image card. Values are "square" and "portrait". Default is "square" (optional)
-  - image_shape: {String} Image mask to apply to the product image card. Values are "arch", "blob", "chevronleft", "chevronright", "diamond", "parallelogram", and "round". (optional)
-  - show_secondary_image: {Boolean} Show the secondary image on hover. Default: false (optional)
   - show_vendor: {Boolean} Show the product vendor. Default: false
   - show_rating: {Boolean} Show the product rating. Default: false
-  - extend_height: {Boolean} Card height extends to available container space. Default: true (optional)
   - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
   - skip_styles: {Boolean} Don't include component styles. Useful when rendering multiple product cards in a loop. Default: false (optional)
   - section_id: {String} The ID of the section that contains this card.
@@ -423,7 +420,7 @@
         <!-- Add to Cart Button -->
         <product-form data-section-id="{{ section_id }}">
           <form
-            action="/cart/add"
+            action="{{ routes.cart_add_url }}"
             method="post"
             enctype="multipart/form-data"
             id="product-form-{{ card_product.id }}"
@@ -497,7 +494,7 @@
         const formData = new FormData(form);
 
         // Add to cart
-        fetch('/cart/add.js', {
+        fetch('{{ routes.cart_add_url }}.js', {
           method: 'POST',
           body: formData,
         })
@@ -506,7 +503,7 @@
             // Update cart count if element exists
             const cartCount = document.querySelector('.cart-count-bubble');
             if (cartCount) {
-              fetch('/cart.js')
+              fetch('{{ routes.cart_url }}.js')
                 .then((response) => response.json())
                 .then((cart) => {
                   cartCount.textContent = cart.item_count;

@@ -61,14 +61,11 @@
                   {%- render 'card-product-alternative',
                     card_product: product,
                     media_aspect_ratio: section.settings.image_ratio,
-                    image_shape: section.settings.image_shape,
-                    show_secondary_image: section.settings.show_secondary_image,
                     show_vendor: section.settings.show_vendor,
                     show_rating: section.settings.show_rating,
                     lazy_load: true,
                     skip_styles: forloop.index0,
-                    section_id: section.id,
-                    extend_height: true
+                    section_id: section.id
                   -%}
                 </div>
               {%- endfor -%}
