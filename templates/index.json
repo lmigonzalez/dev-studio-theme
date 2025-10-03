@@ -541,6 +541,50 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
+    },
+    "popup_pfDPmY": {
+      "type": "popup",
+      "name": "Popup",
+      "settings": {
+        "enable_popup": true,
+        "trigger_type": "scroll",
+        "delay": 3,
+        "scroll_percentage": 50,
+        "frequency": "session",
+        "show_once": false,
+        "image_border_radius": 8,
+        "badge_text": "Limited Time Offer",
+        "heading": "Get 15% Off Your First Order!",
+        "text": "Join our newsletter and receive an exclusive discount code for your first purchase.",
+        "show_discount": true,
+        "discount_label": "Use Code",
+        "discount_code": "WELCOME15",
+        "show_email_form": true,
+        "email_placeholder": "Enter your email address",
+        "button_text": "Get My Discount",
+        "button_link": "",
+        "success_message": "Success! Check your email",
+        "footer_text": "No spam, unsubscribe anytime",
+        "popup_width": 550,
+        "padding": 40,
+        "border_radius": 12,
+        "background_color": "#ffffff",
+        "text_color": "#333333",
+        "heading_color": "#000000",
+        "heading_size": 32,
+        "text_size": 16,
+        "badge_background": "#ff6b6b",
+        "badge_text_color": "#ffffff",
+        "discount_background": "#f8f9fa",
+        "discount_text_color": "#000000",
+        "discount_border_color": "#dee2e6",
+        "button_background": "#000000",
+        "button_text_color": "#ffffff",
+        "input_background": "#ffffff",
+        "input_border_color": "#dee2e6",
+        "close_button_color": "#f8f9fa",
+        "close_button_icon_color": "#333333"
+      }
     }
   },
   "order": [
@@ -556,6 +600,7 @@
     "testimonials_YbMwFr",
     "product_showcase_YJcaMU",
     "email_signup_banner_f3Pw9M",
-    "separator_yFBgdx"
+    "separator_yFBgdx",
+    "popup_pfDPmY"
   ]
 }
