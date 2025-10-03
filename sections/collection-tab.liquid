@@ -53,12 +53,6 @@
             aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
             {{ block.shopify_attributes }}
           >
-            {%- liquid
-              assign quick_add_value = section.settings.enable_quick_add
-              if quick_add_value == 'false'
-                assign quick_add_value = false
-              endif
-            -%}
             <div class="swiper product-tabs-swiper" id="ProductTabsSwiper-{{ section.id }}-{{ block.settings.tab_id }}">
               <div class="swiper-wrapper">
                 {%- for product in block.settings.collection.products limit: block.settings.products_to_show -%}
@@ -412,29 +406,6 @@
       "info": "Add images by uploading them to the product page."
     },
     {
-      "type": "select",
-      "id": "image_shape",
-      "options": [
-        { "value": "default", "label": "Default" },
-        { "value": "arch", "label": "Arch" },
-        { "value": "blob", "label": "Blob" },
-        { "value": "chevronleft", "label": "Chevron left" },
-        { "value": "chevronright", "label": "Chevron right" },
-        { "value": "diamond", "label": "Diamond" },
-        { "value": "parallelogram", "label": "Parallelogram" },
-        { "value": "round", "label": "Round" }
-      ],
-      "default": "default",
-      "label": "Image shape",
-      "info": "Shape mask applies to product cards only"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_secondary_image",
-      "default": false,
-      "label": "Show second image on hover"
-    },
-    {
       "type": "checkbox",
       "id": "show_vendor",
       "default": false,
@@ -446,18 +417,6 @@
       "default": false,
       "label": "Show product rating",
       "info": "To display a rating, add a product rating app. [Learn more](https://help.shopify.com/manual/online-store/themes/theme-structure/theme-features#featured-collection-show-product-rating)"
-    },
-    {
-      "type": "select",
-      "id": "enable_quick_add",
-      "default": "standard",
-      "label": "Enable quick add button",
-      "info": "Quick add button appears on product cards",
-      "options": [
-        { "value": "standard", "label": "Standard" },
-        { "value": "bulk", "label": "Bulk" },
-        { "value": "false", "label": "Disabled" }
-      ]
     },
     {
       "type": "color",

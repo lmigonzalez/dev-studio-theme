@@ -47,10 +47,6 @@
       <div class="product-slider-container" data-section-id="{{ section.id }}">
         {%- liquid
           assign products_to_display = section.settings.products_to_show
-          assign quick_add_value = section.settings.enable_quick_add
-          if quick_add_value == 'false'
-            assign quick_add_value = false
-          endif
         -%}
 
         {%- if section.settings.collection != blank and section.settings.collection.products_count > 0 -%}
@@ -466,29 +462,6 @@
       "info": "Add images by uploading them to the product page."
     },
     {
-      "type": "select",
-      "id": "image_shape",
-      "options": [
-        { "value": "default", "label": "Default" },
-        { "value": "arch", "label": "Arch" },
-        { "value": "blob", "label": "Blob" },
-        { "value": "chevronleft", "label": "Chevron left" },
-        { "value": "chevronright", "label": "Chevron right" },
-        { "value": "diamond", "label": "Diamond" },
-        { "value": "parallelogram", "label": "Parallelogram" },
-        { "value": "round", "label": "Round" }
-      ],
-      "default": "default",
-      "label": "Image shape",
-      "info": "Shape mask applies to product cards only"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_secondary_image",
-      "default": false,
-      "label": "Show second image on hover"
-    },
-    {
       "type": "checkbox",
       "id": "show_vendor",
       "default": false,
@@ -500,18 +473,6 @@
       "default": false,
       "label": "Show product rating",
       "info": "To display a rating, add a product rating app. [Learn more](https://help.shopify.com/manual/online-store/themes/theme-structure/theme-features#featured-collection-show-product-rating)"
-    },
-    {
-      "type": "select",
-      "id": "enable_quick_add",
-      "default": "standard",
-      "label": "Enable quick add button",
-      "info": "Quick add button appears on product cards",
-      "options": [
-        { "value": "standard", "label": "Standard" },
-        { "value": "bulk", "label": "Bulk" },
-        { "value": "false", "label": "Disabled" }
-      ]
     },
     {
       "type": "header",
