@@ -1,7 +1,17 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 36,
         "padding_bottom": 36
@@ -10,9 +20,20 @@
     "form": {
       "type": "contact-form",
       "settings": {
-        "heading": "",
+        "heading": "Contact us",
         "heading_size": "h1",
+        "heading_alignment": "left",
+        "heading_color": "",
+        "heading_letter_spacing": 0,
+        "heading_line_height": "1.2",
+        "description": "",
+        "description_color": "",
+        "description_max_width": 100,
+        "description_line_height": "1.5",
         "color_scheme": "scheme-1",
+        "image": "shopify://shop_images/15812.jpg",
+        "image_overlay_text": "Split contact form page. This layout is a little more visually interesting than a simple contact form, and the space on the right can be utilized to show off the product UI, features, or customer testimonials to add a little bit of social proof.",
+        "image_overlay_author": "asdasd",
         "padding_top": 36,
         "padding_bottom": 36
       }
