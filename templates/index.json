@@ -264,6 +264,55 @@
         "padding_bottom": 36
       }
     },
+    "testimonials_YbMwFr": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_U9GiaV": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/2149186122.jpg",
+            "rating": 5,
+            "text": "Skena.co delivers exceptional fashion with a perfect blend of style, quality, and affordability. Trendy pieces for every occasion, making it my go-to fashion destination!",
+            "author": "Cameron Williamson"
+          }
+        },
+        "testimonial_w9WnAf": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/2149186132.jpg",
+            "rating": 5,
+            "text": "Amazing quality and fast shipping! The clothing exceeded my expectations. Will definitely shop here again.",
+            "author": "Sarah Johnson"
+          }
+        },
+        "testimonial_NP4Ybi": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/2149186105.jpg",
+            "rating": 5,
+            "text": "Best online shopping experience! Great customer service and beautiful products that match the photos perfectly.",
+            "author": "Michael Chen"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_U9GiaV",
+        "testimonial_w9WnAf",
+        "testimonial_NP4Ybi"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "heading": "<strong>Testimonial</strong>",
+        "heading_size": "h1",
+        "subheading": "Customer testimonials showcasing real experiences, building trust and confidence in our products.",
+        "color_scheme": "scheme-4",
+        "autoplay": true,
+        "autoplay_delay": 5,
+        "loop": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "faq_4KdtNN": {
       "type": "faq",
       "blocks": {
@@ -345,55 +394,6 @@
         "padding_top": 36,
         "padding_bottom": 36,
         "block_border_radius": 0
-      }
-    },
-    "testimonials_YbMwFr": {
-      "type": "testimonials",
-      "blocks": {
-        "testimonial_U9GiaV": {
-          "type": "testimonial",
-          "settings": {
-            "image": "shopify://shop_images/2149186122.jpg",
-            "rating": 5,
-            "text": "Skena.co delivers exceptional fashion with a perfect blend of style, quality, and affordability. Trendy pieces for every occasion, making it my go-to fashion destination!",
-            "author": "Cameron Williamson"
-          }
-        },
-        "testimonial_w9WnAf": {
-          "type": "testimonial",
-          "settings": {
-            "image": "shopify://shop_images/2149186132.jpg",
-            "rating": 5,
-            "text": "Amazing quality and fast shipping! The clothing exceeded my expectations. Will definitely shop here again.",
-            "author": "Sarah Johnson"
-          }
-        },
-        "testimonial_NP4Ybi": {
-          "type": "testimonial",
-          "settings": {
-            "image": "shopify://shop_images/2149186105.jpg",
-            "rating": 5,
-            "text": "Best online shopping experience! Great customer service and beautiful products that match the photos perfectly.",
-            "author": "Michael Chen"
-          }
-        }
-      },
-      "block_order": [
-        "testimonial_U9GiaV",
-        "testimonial_w9WnAf",
-        "testimonial_NP4Ybi"
-      ],
-      "name": "Testimonials",
-      "settings": {
-        "heading": "<strong>Testimonial</strong>",
-        "heading_size": "h1",
-        "subheading": "Customer testimonials showcasing real experiences, building trust and confidence in our products.",
-        "color_scheme": "scheme-4",
-        "autoplay": true,
-        "autoplay_delay": 5,
-        "loop": true,
-        "padding_top": 36,
-        "padding_bottom": 36
       }
     },
     "product_showcase_YJcaMU": {
@@ -553,8 +553,8 @@
     "collection_tab_V8gfnm",
     "one_product_ra9zrA",
     "faq_4KdtNN",
-    "testimonials_YbMwFr",
     "product_showcase_YJcaMU",
+    "testimonials_YbMwFr",
     "email_signup_banner_f3Pw9M",
     "separator_yFBgdx"
   ]
