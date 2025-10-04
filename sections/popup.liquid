@@ -120,6 +120,38 @@
     border: 2px dashed {{ section.settings.discount_border_color }};
     text-align: center;
     margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .popup-discount-code.blurred {
+    filter: blur(8px);
+    transition: filter 0.3s ease;
+  }
+
+  .popup-discount-code.revealed {
+    filter: none;
+  }
+
+  .popup-discount-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(248, 249, 250, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .popup-discount-overlay.hidden {
+    display: none;
   }
 
   .popup-discount-label {
@@ -236,7 +268,10 @@
         {% endif %}
 
         {% if section.settings.show_discount and section.settings.discount_code != blank %}
-          <div class="popup-discount-code">
+          <div class="popup-discount-code blurred" id="popup-discount-code-{{ section.id }}">
+            <div class="popup-discount-overlay" id="popup-discount-overlay-{{ section.id }}">
+              Submit Email to Reveal
+            </div>
             <div class="popup-discount-label">{{ section.settings.discount_label }}</div>
             <div class="popup-discount-value">{{ section.settings.discount_code }}</div>
           </div>
@@ -358,11 +393,21 @@
       if (popupForm) {
         popupForm.addEventListener('submit', (e) => {
           e.preventDefault();
-          const email = popupForm.querySelector('input[email]').value;
+          const email = popupForm.querySelector('input[type="email"]').value;
           
           // Here you can integrate with your email service provider
           // For now, we'll just show a success message
           console.log('Email submitted:', email);
+          
+          // Reveal the discount code
+          const discountCode = document.getElementById('popup-discount-code-{{ section.id }}');
+          const discountOverlay = document.getElementById('popup-discount-overlay-{{ section.id }}');
+          
+          if (discountCode && discountOverlay) {
+            discountCode.classList.remove('blurred');
+            discountCode.classList.add('revealed');
+            discountOverlay.classList.add('hidden');
+          }
           
           // Show success message
           const button = popupForm.querySelector('button');
@@ -375,7 +420,7 @@
             button.textContent = originalText;
             button.style.background = '';
             popupForm.reset();
-          }, 2000);
+          }, 3000);
         });
       }
 

@@ -121,6 +121,38 @@
     border: 2px dashed {{ settings.global_popup_discount_border_color }};
     text-align: center;
     margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .global-popup-discount-code.blurred {
+    filter: blur(8px);
+    transition: filter 0.3s ease;
+  }
+
+  .global-popup-discount-code.revealed {
+    filter: none;
+  }
+
+  .global-popup-discount-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(248, 249, 250, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .global-popup-discount-overlay.hidden {
+    display: none;
   }
 
   .global-popup-discount-label {
@@ -270,7 +302,10 @@
       {% endif %}
 
       {% if settings.global_popup_show_discount and settings.global_popup_discount_code != blank %}
-        <div class="global-popup-discount-code">
+        <div class="global-popup-discount-code blurred" id="global-popup-discount-code">
+          <div class="global-popup-discount-overlay" id="global-popup-discount-overlay">
+            Submit Email to Reveal
+          </div>
           <div class="global-popup-discount-label">{{ settings.global_popup_discount_label }}</div>
           <div class="global-popup-discount-value">{{ settings.global_popup_discount_code }}</div>
         </div>
@@ -437,6 +472,17 @@
           if (response.ok || response.redirected) {
             // Success
             showMessage('{{ settings.global_popup_success_message }}', 'success');
+            
+            // Reveal the discount code
+            const discountCode = document.getElementById('global-popup-discount-code');
+            const discountOverlay = document.getElementById('global-popup-discount-overlay');
+            
+            if (discountCode && discountOverlay) {
+              discountCode.classList.remove('blurred');
+              discountCode.classList.add('revealed');
+              discountOverlay.classList.add('hidden');
+            }
+            
             form.reset();
             
             // Close popup after delay
@@ -444,7 +490,7 @@
               hidePopup();
               submitBtn.disabled = false;
               submitBtn.textContent = originalText;
-            }, 2000);
+            }, 3000);
           } else {
             throw new Error('Submission failed');
           }
