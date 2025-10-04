@@ -1,0 +1,517 @@
+{% if settings.global_popup_enable %}
+<style>
+  .global-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(4px);
+  }
+
+  .global-popup-overlay.active {
+    display: flex;
+    opacity: 1;
+  }
+
+  .global-popup-container {
+    background-color: {{ settings.global_popup_background_color }};
+    color: {{ settings.global_popup_text_color }};
+    border-radius: {{ settings.global_popup_border_radius }}px;
+    max-width: {{ settings.global_popup_width }}px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform: scale(0.7);
+    transition: transform 0.3s ease;
+  }
+
+  .global-popup-overlay.active .global-popup-container {
+    transform: scale(1);
+  }
+
+  .global-popup-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: {{ settings.global_popup_close_button_color }};
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    opacity: 0.8;
+  }
+
+  .global-popup-close:hover {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+
+  .global-popup-close svg {
+    width: 18px;
+    height: 18px;
+    stroke: {{ settings.global_popup_close_icon_color }};
+  }
+
+  .global-popup-content {
+    padding: {{ settings.global_popup_padding }}px;
+  }
+
+  .global-popup-image-wrapper {
+    width: 100%;
+    margin-bottom: 25px;
+    border-radius: {{ settings.global_popup_image_radius }}px;
+    overflow: hidden;
+  }
+
+  .global-popup-image-wrapper img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .global-popup-badge {
+    display: inline-block;
+    background: {{ settings.global_popup_badge_background }};
+    color: {{ settings.global_popup_badge_text_color }};
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .global-popup-heading {
+    font-size: {{ settings.global_popup_heading_size }}px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.2;
+    color: {{ settings.global_popup_heading_color }};
+  }
+
+  .global-popup-text {
+    font-size: {{ settings.global_popup_text_size }}px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    opacity: 0.9;
+  }
+
+  .global-popup-discount-code {
+    background: {{ settings.global_popup_discount_background }};
+    color: {{ settings.global_popup_discount_text_color }};
+    padding: 18px 25px;
+    border-radius: 8px;
+    border: 2px dashed {{ settings.global_popup_discount_border_color }};
+    text-align: center;
+    margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .global-popup-discount-code.blurred {
+    filter: blur(8px);
+    transition: filter 0.3s ease;
+  }
+
+  .global-popup-discount-code.revealed {
+    filter: none;
+  }
+
+  .global-popup-discount-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(248, 249, 250, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .global-popup-discount-overlay.hidden {
+    display: none;
+  }
+
+  .global-popup-discount-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    opacity: 0.8;
+  }
+
+  .global-popup-discount-value {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-family: monospace;
+  }
+
+  .global-popup-form {
+    margin-bottom: 20px;
+  }
+
+  .global-popup-form .field {
+    margin-bottom: 12px;
+  }
+
+  .global-popup-form input[type="email"] {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid {{ settings.global_popup_input_border_color }};
+    border-radius: 6px;
+    font-size: 15px;
+    transition: border-color 0.2s ease;
+    background: {{ settings.global_popup_input_background }};
+    color: {{ settings.global_popup_text_color }};
+  }
+
+  .global-popup-form input[type="email"]:focus {
+    outline: none;
+    border-color: {{ settings.global_popup_button_background }};
+  }
+
+  .global-popup-button {
+    width: 100%;
+    padding: 16px 30px;
+    background: {{ settings.global_popup_button_background }};
+    color: {{ settings.global_popup_button_text_color }};
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .global-popup-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .global-popup-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .global-popup-footer {
+    text-align: center;
+    font-size: 12px;
+    opacity: 0.7;
+    margin-top: 20px;
+  }
+
+  .global-popup-message {
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 14px;
+    display: none;
+  }
+
+  .global-popup-message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    display: block;
+  }
+
+  .global-popup-message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .global-popup-container {
+      width: 95%;
+      max-height: 85vh;
+    }
+
+    .global-popup-heading {
+      font-size: {{ settings.global_popup_heading_size | minus: 6 }}px;
+    }
+
+    .global-popup-content {
+      padding: 30px 20px;
+    }
+  }
+</style>
+
+<div class="global-popup-overlay" id="global-popup">
+  <div class="global-popup-container">
+    <button class="global-popup-close" aria-label="Close popup">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <div class="global-popup-content">
+      {% if settings.global_popup_image != blank %}
+        <div class="global-popup-image-wrapper">
+          <img
+            src="{{ settings.global_popup_image | image_url: width: 800 }}"
+            alt="{{ settings.global_popup_image.alt | escape }}"
+            loading="lazy"
+            width="{{ settings.global_popup_image.width }}"
+            height="{{ settings.global_popup_image.height }}"
+          >
+        </div>
+      {% endif %}
+
+      <div id="popup-message-container"></div>
+
+      {% if settings.global_popup_badge_text != blank %}
+        <div class="global-popup-badge">{{ settings.global_popup_badge_text }}</div>
+      {% endif %}
+
+      {% if settings.global_popup_heading != blank %}
+        <h2 class="global-popup-heading">{{ settings.global_popup_heading }}</h2>
+      {% endif %}
+
+      {% if settings.global_popup_text != blank %}
+        <div class="global-popup-text">{{ settings.global_popup_text }}</div>
+      {% endif %}
+
+      {% if settings.global_popup_show_discount and settings.global_popup_discount_code != blank %}
+        <div class="global-popup-discount-code blurred" id="global-popup-discount-code">
+          <div class="global-popup-discount-overlay" id="global-popup-discount-overlay">
+            Submit Email to Reveal
+          </div>
+          <div class="global-popup-discount-label">{{ settings.global_popup_discount_label }}</div>
+          <div class="global-popup-discount-value">{{ settings.global_popup_discount_code }}</div>
+        </div>
+      {% endif %}
+
+      {% if settings.global_popup_show_email_form %}
+        <form class="global-popup-form" id="global-popup-newsletter-form">
+          <div class="field">
+            <input
+              type="email"
+              name="contact[email]"
+              id="global-popup-email"
+              placeholder="{{ settings.global_popup_email_placeholder }}"
+              required
+              autocomplete="email"
+            >
+          </div>
+          <input type="hidden" name="contact[tags]" value="newsletter,popup">
+          <button type="submit" class="global-popup-button" id="global-popup-submit">
+            {{ settings.global_popup_button_text }}
+          </button>
+        </form>
+      {% else %}
+        <a href="{{ settings.global_popup_button_link }}" class="global-popup-button" style="display: block; text-decoration: none; text-align: center;">
+          {{ settings.global_popup_button_text }}
+        </a>
+      {% endif %}
+
+      {% if settings.global_popup_footer_text != blank %}
+        <div class="global-popup-footer">{{ settings.global_popup_footer_text }}</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const popup = document.getElementById('global-popup');
+    if (!popup) return;
+    
+    const closeBtn = popup.querySelector('.global-popup-close');
+    const overlay = popup;
+    const form = document.getElementById('global-popup-newsletter-form');
+    const messageContainer = document.getElementById('popup-message-container');
+    
+    const settings = {
+      delay: {{ settings.global_popup_delay | times: 1000 }},
+      triggerType: '{{ settings.global_popup_trigger }}',
+      scrollPercentage: {{ settings.global_popup_scroll_percentage }},
+      frequency: '{{ settings.global_popup_frequency }}'
+    };
+
+    const STORAGE_KEY = 'global-popup-shown';
+
+    function showMessage(message, type) {
+      if (!messageContainer) return;
+      messageContainer.innerHTML = `<div class="global-popup-message ${type}">${message}</div>`;
+      setTimeout(() => {
+        messageContainer.innerHTML = '';
+      }, 5000);
+    }
+
+    function shouldShowPopup() {
+      const lastShown = localStorage.getItem(STORAGE_KEY);
+      
+      if (!lastShown) return true;
+      
+      if (settings.frequency === 'always') return true;
+      if (settings.frequency === 'once') return false;
+      
+      const lastShownDate = new Date(parseInt(lastShown));
+      const now = new Date();
+      
+      if (settings.frequency === 'daily') {
+        return now.getDate() !== lastShownDate.getDate() || 
+               now.getMonth() !== lastShownDate.getMonth() ||
+               now.getFullYear() !== lastShownDate.getFullYear();
+      }
+      
+      if (settings.frequency === 'session') {
+        return false;
+      }
+      
+      return true;
+    }
+
+    function showPopup() {
+      if (!shouldShowPopup()) return;
+      
+      popup.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      
+      if (settings.frequency !== 'always') {
+        localStorage.setItem(STORAGE_KEY, Date.now().toString());
+      }
+    }
+
+    function hidePopup() {
+      popup.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function handleScroll() {
+      const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      if (scrolled >= settings.scrollPercentage) {
+        showPopup();
+        window.removeEventListener('scroll', handleScroll);
+      }
+    }
+
+    function handleExitIntent(e) {
+      if (e.clientY <= 0) {
+        showPopup();
+        document.removeEventListener('mouseout', handleExitIntent);
+      }
+    }
+
+    // Close popup handlers
+    if (closeBtn) {
+      closeBtn.addEventListener('click', hidePopup);
+    }
+    
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        hidePopup();
+      }
+    });
+
+    // ESC key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && popup.classList.contains('active')) {
+        hidePopup();
+      }
+    });
+
+    // Handle newsletter form submission
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('global-popup-submit');
+        const email = document.getElementById('global-popup-email').value;
+        
+        if (!email) return;
+
+        // Disable submit button
+        submitBtn.disabled = true;
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Subscribing...';
+
+        try {
+          // Create FormData from the form
+          const formData = new FormData(form);
+          
+          // Submit to Shopify contact form
+          const response = await fetch('/contact', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Accept': 'application/json'
+            }
+          });
+
+          if (response.ok || response.redirected) {
+            // Success
+            showMessage('{{ settings.global_popup_success_message }}', 'success');
+            
+            // Reveal the discount code
+            const discountCode = document.getElementById('global-popup-discount-code');
+            const discountOverlay = document.getElementById('global-popup-discount-overlay');
+            
+            if (discountCode && discountOverlay) {
+              discountCode.classList.remove('blurred');
+              discountCode.classList.add('revealed');
+              discountOverlay.classList.add('hidden');
+            }
+            
+            form.reset();
+            
+            // Close popup after delay
+            setTimeout(() => {
+              hidePopup();
+              submitBtn.disabled = false;
+              submitBtn.textContent = originalText;
+            }, 3000);
+          } else {
+            throw new Error('Submission failed');
+          }
+        } catch (error) {
+          console.error('Newsletter signup error:', error);
+          showMessage('Something went wrong. Please try again.', 'error');
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }
+      });
+    }
+
+    // Initialize popup based on trigger type
+    if (settings.triggerType === 'immediate') {
+      setTimeout(showPopup, settings.delay);
+    } else if (settings.triggerType === 'scroll') {
+      window.addEventListener('scroll', handleScroll);
+    } else if (settings.triggerType === 'exit_intent') {
+      document.addEventListener('mouseout', handleExitIntent);
+    }
+  })();
+</script>
+{% endif %}
+
