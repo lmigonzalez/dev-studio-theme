@@ -1414,25 +1414,40 @@
       },
       {
         "type": "header",
-        "content": "Discount Code"
+        "content": "Discount Offer"
       },
       {
         "type": "checkbox",
         "id": "global_popup_show_discount",
-        "label": "Show discount code",
+        "label": "Show discount offer",
         "default": true
       },
       {
-        "type": "text",
-        "id": "global_popup_discount_label",
-        "label": "Discount label",
-        "default": "Use Code"
+        "type": "range",
+        "id": "global_popup_discount_percentage",
+        "min": 5,
+        "max": 50,
+        "step": 5,
+        "unit": "%",
+        "label": "Discount percentage",
+        "default": 15
       },
       {
-        "type": "text",
-        "id": "global_popup_discount_code",
-        "label": "Discount code",
-        "default": "WELCOME15"
+        "type": "select",
+        "id": "global_popup_discount_applies_to",
+        "label": "Discount applies to",
+        "options": [
+          {
+            "value": "first_order",
+            "label": "First order only"
+          },
+          {
+            "value": "next_order",
+            "label": "Next order"
+          }
+        ],
+        "default": "first_order",
+        "info": "Create a discount code in Shopify that applies to customers with 'newsletter' tag"
       },
       {
         "type": "header",
@@ -1467,7 +1482,7 @@
         "type": "text",
         "id": "global_popup_success_message",
         "label": "Success message",
-        "default": "Thank you! Check your email for the discount code."
+        "default": "Thank you! Your discount will be automatically applied at checkout."
       },
       {
         "type": "text",

@@ -113,61 +113,44 @@
     opacity: 0.9;
   }
 
-  .global-popup-discount-code {
+  .global-popup-discount-offer {
     background: {{ settings.global_popup_discount_background }};
     color: {{ settings.global_popup_discount_text_color }};
-    padding: 18px 25px;
-    border-radius: 8px;
-    border: 2px dashed {{ settings.global_popup_discount_border_color }};
+    padding: 20px 25px;
+    border-radius: 12px;
+    border: 2px solid {{ settings.global_popup_discount_border_color }};
     text-align: center;
     margin-bottom: 25px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .global-popup-discount-code.blurred {
-    filter: blur(8px);
-    transition: filter 0.3s ease;
-  }
-
-  .global-popup-discount-code.revealed {
-    filter: none;
-  }
-
-  .global-popup-discount-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(248, 249, 250, 0.9);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
-    font-weight: 600;
-    color: #6c757d;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    gap: 15px;
   }
 
-  .global-popup-discount-overlay.hidden {
-    display: none;
+  .global-popup-discount-icon {
+    font-size: 32px;
+    line-height: 1;
   }
 
-  .global-popup-discount-label {
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-    opacity: 0.8;
+  .global-popup-discount-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
   }
 
-  .global-popup-discount-value {
-    font-size: 28px;
+  .global-popup-discount-percentage {
+    font-size: 24px;
     font-weight: 700;
-    letter-spacing: 2px;
-    font-family: monospace;
+    line-height: 1;
+    color: {{ settings.global_popup_discount_text_color }};
+  }
+
+  .global-popup-discount-applies {
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.9;
+    text-transform: capitalize;
   }
 
   .global-popup-form {
@@ -301,13 +284,19 @@
         <div class="global-popup-text">{{ settings.global_popup_text }}</div>
       {% endif %}
 
-      {% if settings.global_popup_show_discount and settings.global_popup_discount_code != blank %}
-        <div class="global-popup-discount-code blurred" id="global-popup-discount-code">
-          <div class="global-popup-discount-overlay" id="global-popup-discount-overlay">
-            Submit Email to Reveal
+      {% if settings.global_popup_show_discount and settings.global_popup_discount_percentage != blank %}
+        <div class="global-popup-discount-offer">
+          <div class="global-popup-discount-icon">🎉</div>
+          <div class="global-popup-discount-text">
+            <span class="global-popup-discount-percentage">{{ settings.global_popup_discount_percentage }}% OFF</span>
+            <span class="global-popup-discount-applies">
+              {% if settings.global_popup_discount_applies_to == 'first_order' %}
+                on your first order
+              {% else %}
+                on your next order
+              {% endif %}
+            </span>
           </div>
-          <div class="global-popup-discount-label">{{ settings.global_popup_discount_label }}</div>
-          <div class="global-popup-discount-value">{{ settings.global_popup_discount_code }}</div>
         </div>
       {% endif %}
 
@@ -458,26 +447,16 @@
         // Let the form submit naturally to Shopify
         // The form will handle the submission and redirect
         
-        // Show success message and reveal discount code after a short delay
+        // Show success message after a short delay
         setTimeout(() => {
           showMessage('{{ settings.global_popup_success_message }}', 'success');
-          
-          // Reveal the discount code
-          const discountCode = document.getElementById('global-popup-discount-code');
-          const discountOverlay = document.getElementById('global-popup-discount-overlay');
-          
-          if (discountCode && discountOverlay) {
-            discountCode.classList.remove('blurred');
-            discountCode.classList.add('revealed');
-            discountOverlay.classList.add('hidden');
-          }
           
           // Close popup after delay
           setTimeout(() => {
             hidePopup();
             submitBtn.disabled = false;
             submitBtn.textContent = originalText;
-          }, 3000);
+          }, 2500);
         }, 500);
       });
     }
