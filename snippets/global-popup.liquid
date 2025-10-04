@@ -312,7 +312,8 @@
       {% endif %}
 
       {% if settings.global_popup_show_email_form %}
-        <form class="global-popup-form" id="global-popup-newsletter-form">
+        {% form 'customer', class: 'global-popup-form', id: 'global-popup-newsletter-form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter,popup">
           <div class="field">
             <input
               type="email"
@@ -321,13 +322,13 @@
               placeholder="{{ settings.global_popup_email_placeholder }}"
               required
               autocomplete="email"
+              value="{{ form.email }}"
             >
           </div>
-          <input type="hidden" name="contact[tags]" value="newsletter,popup">
           <button type="submit" class="global-popup-button" id="global-popup-submit">
             {{ settings.global_popup_button_text }}
           </button>
-        </form>
+        {% endform %}
       {% else %}
         <a href="{{ settings.global_popup_button_link }}" class="global-popup-button" style="display: block; text-decoration: none; text-align: center;">
           {{ settings.global_popup_button_text }}
@@ -443,63 +444,41 @@
 
     // Handle newsletter form submission
     if (form) {
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
+      form.addEventListener('submit', (e) => {
         const submitBtn = document.getElementById('global-popup-submit');
         const email = document.getElementById('global-popup-email').value;
         
         if (!email) return;
 
-        // Disable submit button
+        // Disable submit button and show loading state
         submitBtn.disabled = true;
         const originalText = submitBtn.textContent;
         submitBtn.textContent = 'Subscribing...';
 
-        try {
-          // Create FormData from the form
-          const formData = new FormData(form);
+        // Let the form submit naturally to Shopify
+        // The form will handle the submission and redirect
+        
+        // Show success message and reveal discount code after a short delay
+        setTimeout(() => {
+          showMessage('{{ settings.global_popup_success_message }}', 'success');
           
-          // Submit to Shopify contact form
-          const response = await fetch('/contact', {
-            method: 'POST',
-            body: formData,
-            headers: {
-              'Accept': 'application/json'
-            }
-          });
-
-          if (response.ok || response.redirected) {
-            // Success
-            showMessage('{{ settings.global_popup_success_message }}', 'success');
-            
-            // Reveal the discount code
-            const discountCode = document.getElementById('global-popup-discount-code');
-            const discountOverlay = document.getElementById('global-popup-discount-overlay');
-            
-            if (discountCode && discountOverlay) {
-              discountCode.classList.remove('blurred');
-              discountCode.classList.add('revealed');
-              discountOverlay.classList.add('hidden');
-            }
-            
-            form.reset();
-            
-            // Close popup after delay
-            setTimeout(() => {
-              hidePopup();
-              submitBtn.disabled = false;
-              submitBtn.textContent = originalText;
-            }, 3000);
-          } else {
-            throw new Error('Submission failed');
+          // Reveal the discount code
+          const discountCode = document.getElementById('global-popup-discount-code');
+          const discountOverlay = document.getElementById('global-popup-discount-overlay');
+          
+          if (discountCode && discountOverlay) {
+            discountCode.classList.remove('blurred');
+            discountCode.classList.add('revealed');
+            discountOverlay.classList.add('hidden');
           }
-        } catch (error) {
-          console.error('Newsletter signup error:', error);
-          showMessage('Something went wrong. Please try again.', 'error');
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalText;
-        }
+          
+          // Close popup after delay
+          setTimeout(() => {
+            hidePopup();
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+          }, 3000);
+        }, 500);
       });
     }
 

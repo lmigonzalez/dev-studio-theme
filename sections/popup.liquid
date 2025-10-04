@@ -278,17 +278,20 @@
         {% endif %}
 
         {% if section.settings.show_email_form %}
-          <form class="popup-form" id="popup-form-{{ section.id }}">
+          {% form 'customer', class: 'popup-form', id: 'popup-form-{{ section.id }}' %}
+            <input type="hidden" name="contact[tags]" value="newsletter,popup">
             <input
               type="email"
-              name="email"
+              name="contact[email]"
               placeholder="{{ section.settings.email_placeholder }}"
               required
+              autocomplete="email"
+              value="{{ form.email }}"
             >
             <button type="submit" class="popup-button">
               {{ section.settings.button_text }}
             </button>
-          </form>
+          {% endform %}
         {% else %}
           <a href="{{ section.settings.button_link }}" class="popup-button" style="display: block; text-decoration: none; text-align: center;">
             {{ section.settings.button_text }}
@@ -392,35 +395,42 @@
       // Handle form submission
       if (popupForm) {
         popupForm.addEventListener('submit', (e) => {
-          e.preventDefault();
           const email = popupForm.querySelector('input[type="email"]').value;
           
-          // Here you can integrate with your email service provider
-          // For now, we'll just show a success message
-          console.log('Email submitted:', email);
-          
-          // Reveal the discount code
-          const discountCode = document.getElementById('popup-discount-code-{{ section.id }}');
-          const discountOverlay = document.getElementById('popup-discount-overlay-{{ section.id }}');
-          
-          if (discountCode && discountOverlay) {
-            discountCode.classList.remove('blurred');
-            discountCode.classList.add('revealed');
-            discountOverlay.classList.add('hidden');
-          }
-          
-          // Show success message
+          if (!email) return;
+
+          // Show loading state
           const button = popupForm.querySelector('button');
           const originalText = button.textContent;
-          button.textContent = '{{ section.settings.success_message }}';
-          button.style.background = '#10b981';
+          button.textContent = 'Subscribing...';
+          button.disabled = true;
           
+          // Let the form submit naturally to Shopify
+          // The form will handle the submission and redirect
+          
+          // Show success message and reveal discount code after a short delay
           setTimeout(() => {
-            hidePopup();
-            button.textContent = originalText;
-            button.style.background = '';
-            popupForm.reset();
-          }, 3000);
+            // Reveal the discount code
+            const discountCode = document.getElementById('popup-discount-code-{{ section.id }}');
+            const discountOverlay = document.getElementById('popup-discount-overlay-{{ section.id }}');
+            
+            if (discountCode && discountOverlay) {
+              discountCode.classList.remove('blurred');
+              discountCode.classList.add('revealed');
+              discountOverlay.classList.add('hidden');
+            }
+            
+            // Show success message
+            button.textContent = '{{ section.settings.success_message }}';
+            button.style.background = '#10b981';
+            
+            setTimeout(() => {
+              hidePopup();
+              button.textContent = originalText;
+              button.style.background = '';
+              button.disabled = false;
+            }, 3000);
+          }, 500);
         });
       }
 
