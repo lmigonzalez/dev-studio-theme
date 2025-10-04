@@ -183,100 +183,156 @@
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
   <div class="section-{{ section.id }}-padding">
-  <div class="page-width testimonials-section">
-    {%- unless section.settings.heading == blank -%}
-      <div class="title-wrapper center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-        <h2 class="title inline-richtext {{ section.settings.heading_size }}">
-          {{ section.settings.heading }}
-        </h2>
-      </div>
-    {%- endunless -%}
-    {%- if section.settings.subheading != blank -%}
-      <div class="testimonials-header{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}style="animation-delay: 0.1s;"{% endif %}>
-        <p class="testimonials-header__subtitle">{{ section.settings.subheading }}</p>
-      </div>
-    {%- endif -%}
+    <div class="page-width testimonials-section">
+      {%- unless section.settings.heading == blank -%}
+        <div class="title-wrapper center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          <h2 class="title inline-richtext {{ section.settings.heading_size }}">
+            {{ section.settings.heading }}
+          </h2>
+        </div>
+      {%- endunless -%}
+      {%- if section.settings.subheading != blank -%}
+        <div
+          class="testimonials-header{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            style="animation-delay: 0.1s;"
+          {% endif %}
+        >
+          <p class="testimonials-header__subtitle">{{ section.settings.subheading }}</p>
+        </div>
+      {%- endif -%}
 
-    {%- if section.blocks.size > 0 -%}
-      <div class="testimonials-slider">
-        <div class="swiper testimonials-swiper-{{ section.id }}">
-          <div class="swiper-wrapper">
-            {%- for block in section.blocks -%}
-              {%- case block.type -%}
-                {%- when 'testimonial' -%}
-                  <div class="swiper-slide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}{% if settings.animations_reveal_on_scroll %} data-cascade style="animation-delay: {{ forloop.index0 | times: 0.1 }}s;"{% endif %}>
-                    <div class="testimonial-slide">
-                      {%- if block.settings.image != blank -%}
-                        <div class="testimonial-image">
-                          {{- block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: block.settings.author -}}
-                        </div>
-                      {%- else -%}
-                        <div class="testimonial-image">
-                          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                        </div>
-                      {%- endif -%}
+      {%- if section.blocks.size > 0 -%}
+        <div class="testimonials-slider">
+          <div class="swiper testimonials-swiper-{{ section.id }}">
+            <div class="swiper-wrapper">
+              {%- for block in section.blocks -%}
+                {%- case block.type -%}
+                  {%- when 'testimonial' -%}
+                    <div
+                      class="swiper-slide{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                      {{ block.shopify_attributes -}}
+                      {% if settings.animations_reveal_on_scroll %}
+                        data-cascade style="animation-delay: {{ forloop.index0 | times: 0.1 }}s;"
+                      {% endif %}
+                    >
+                      <div class="testimonial-slide">
+                        {%- if block.settings.image != blank -%}
+                          <div class="testimonial-image">
+                            {{-
+                              block.settings.image
+                              | image_url: width: 400
+                              | image_tag: loading: 'lazy', alt: block.settings.author
+                            -}}
+                          </div>
+                        {%- else -%}
+                          <div class="testimonial-image">
+                            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                          </div>
+                        {%- endif -%}
 
-                      {%- if block.settings.rating > 0 -%}
-                        <div class="testimonial-rating">
-                          {%- for i in (1..block.settings.rating) -%}
-                            <svg class="testimonial-rating__star" viewBox="0 0 20 20" fill="currentColor">
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                            </svg>
-                          {%- endfor -%}
-                        </div>
-                      {%- endif -%}
+                        {%- if block.settings.rating > 0 -%}
+                          <div class="testimonial-rating">
+                            {%- for i in (1..block.settings.rating) -%}
+                              <svg class="testimonial-rating__star" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                              </svg>
+                            {%- endfor -%}
+                          </div>
+                        {%- endif -%}
 
-                      {%- if block.settings.text != blank -%}
-                        <div class="testimonial-content">
-                          <p class="testimonial-text">{{ block.settings.text }}</p>
-                        </div>
-                      {%- endif -%}
+                        {%- if block.settings.text != blank -%}
+                          <div class="testimonial-content">
+                            <p class="testimonial-text">{{ block.settings.text }}</p>
+                          </div>
+                        {%- endif -%}
 
-                      {%- if block.settings.author != blank -%}
-                        <p class="testimonial-author">{{ block.settings.author }}</p>
-                      {%- endif -%}
+                        {%- if block.settings.author != blank -%}
+                          <p class="testimonial-author">{{ block.settings.author }}</p>
+                        {%- endif -%}
+                      </div>
                     </div>
-                  </div>
-              {%- endcase -%}
-            {%- endfor -%}
+                {%- endcase -%}
+              {%- endfor -%}
+            </div>
+          </div>
+
+          <div class="swiper-button-prev swiper-button-prev-{{ section.id }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+          </div>
+          <div class="swiper-button-next swiper-button-next-{{ section.id }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
           </div>
         </div>
-
-        <div class="swiper-button-prev swiper-button-prev-{{ section.id }}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M15 18l-6-6 6-6"/>
-          </svg>
-        </div>
-        <div class="swiper-button-next swiper-button-next-{{ section.id }}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 18l6-6-6-6"/>
-          </svg>
-        </div>
-      </div>
-    {%- endif -%}
+      {%- endif -%}
     </div>
   </div>
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const swiper{{ section.id | replace: '-', '_' }} = new Swiper('.testimonials-swiper-{{ section.id }}', {
-      loop: {{ section.settings.loop }},
-      autoplay: {{ section.settings.autoplay }} ? {
-        delay: {{ section.settings.autoplay_delay | times: 1000 }},
-        disableOnInteraction: false,
-      } : false,
-      speed: 600,
-      effect: 'fade',
-      fadeEffect: {
-        crossFade: true
-      },
-      navigation: {
-        nextEl: '.swiper-button-next-{{ section.id }}',
-        prevEl: '.swiper-button-prev-{{ section.id }}',
-      },
-    });
+  const sectionId = '{{ section.id }}';
+  const sectionSelector = `#shopify-section-${sectionId}`;
+
+  const initSlider = (container) => {
+    const swiperElement = container.querySelector(`.testimonials-swiper-${sectionId}`);
+
+    if (swiperElement && swiperElement.swiper) {
+      swiperElement.swiper.destroy(true, true);
+    }
+
+    if (swiperElement) {
+      new Swiper(swiperElement, {
+        loop: {{ section.settings.loop }},
+        autoplay: {{ section.settings.autoplay }}
+          ? {
+              delay: {{ section.settings.autoplay_delay | times: 1000 }},
+              disableOnInteraction: false,
+            }
+          : false,
+        speed: 600,
+        effect: 'fade',
+        fadeEffect: {
+          crossFade: true,
+        },
+        navigation: {
+          nextEl: container.querySelector(`.swiper-button-next-${sectionId}`),
+          prevEl: container.querySelector(`.swiper-button-prev-${sectionId}`),
+        },
+      });
+    }
+  };
+
+  const destroySlider = (container) => {
+    const swiperElement = container.querySelector(`.testimonials-swiper-${sectionId}`);
+    if (swiperElement && swiperElement.swiper) {
+      swiperElement.swiper.destroy(true, true);
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const sectionContainer = document.querySelector(sectionSelector);
+    if (sectionContainer) {
+      initSlider(sectionContainer);
+    }
   });
+
+  if (Shopify.designMode) {
+    document.addEventListener('shopify:section:load', (event) => {
+      if (event.detail.sectionId === sectionId) {
+        initSlider(event.target);
+      }
+    });
+
+    document.addEventListener('shopify:section:unload', (event) => {
+      if (event.detail.sectionId === sectionId) {
+        destroySlider(event.target);
+      }
+    });
+  }
 </script>
 
 {% schema %}
@@ -453,4 +509,3 @@
   ]
 }
 {% endschema %}
-
