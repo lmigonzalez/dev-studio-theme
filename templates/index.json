@@ -113,32 +113,6 @@
         "block_border_radius": 8
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "collection": "all",
-        "products_to_show": 4,
-        "icon": "",
-        "title": "<strong>Featured products</strong>",
-        "heading_size": "h1",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "columns_desktop": 4,
-        "enable_desktop_slider": false,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "color_scheme": "scheme-1",
-        "image_ratio": "square",
-        "show_vendor": false,
-        "show_rating": false,
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 44,
-        "padding_bottom": 36
-      }
-    },
     "hero_grid_eVfbBq": {
       "type": "hero-grid",
       "blocks": {
@@ -260,55 +234,6 @@
         "card_shadow": "none",
         "card_shadow_hover": "none",
         "card_bg_color": "",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "testimonials_YbMwFr": {
-      "type": "testimonials",
-      "blocks": {
-        "testimonial_U9GiaV": {
-          "type": "testimonial",
-          "settings": {
-            "image": "shopify://shop_images/2149186122.jpg",
-            "rating": 5,
-            "text": "Skena.co delivers exceptional fashion with a perfect blend of style, quality, and affordability. Trendy pieces for every occasion, making it my go-to fashion destination!",
-            "author": "Cameron Williamson"
-          }
-        },
-        "testimonial_w9WnAf": {
-          "type": "testimonial",
-          "settings": {
-            "image": "shopify://shop_images/2149186132.jpg",
-            "rating": 5,
-            "text": "Amazing quality and fast shipping! The clothing exceeded my expectations. Will definitely shop here again.",
-            "author": "Sarah Johnson"
-          }
-        },
-        "testimonial_NP4Ybi": {
-          "type": "testimonial",
-          "settings": {
-            "image": "shopify://shop_images/2149186105.jpg",
-            "rating": 5,
-            "text": "Best online shopping experience! Great customer service and beautiful products that match the photos perfectly.",
-            "author": "Michael Chen"
-          }
-        }
-      },
-      "block_order": [
-        "testimonial_U9GiaV",
-        "testimonial_w9WnAf",
-        "testimonial_NP4Ybi"
-      ],
-      "name": "Testimonials",
-      "settings": {
-        "heading": "<strong>Testimonial</strong>",
-        "heading_size": "h1",
-        "subheading": "Customer testimonials showcasing real experiences, building trust and confidence in our products.",
-        "color_scheme": "scheme-4",
-        "autoplay": true,
-        "autoplay_delay": 5,
-        "loop": true,
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -461,6 +386,55 @@
         "padding_bottom": 36
       }
     },
+    "testimonials_YbMwFr": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_U9GiaV": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/2149186122.jpg",
+            "rating": 5,
+            "text": "Skena.co delivers exceptional fashion with a perfect blend of style, quality, and affordability. Trendy pieces for every occasion, making it my go-to fashion destination!",
+            "author": "Cameron Williamson"
+          }
+        },
+        "testimonial_w9WnAf": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/2149186132.jpg",
+            "rating": 5,
+            "text": "Amazing quality and fast shipping! The clothing exceeded my expectations. Will definitely shop here again.",
+            "author": "Sarah Johnson"
+          }
+        },
+        "testimonial_NP4Ybi": {
+          "type": "testimonial",
+          "settings": {
+            "image": "shopify://shop_images/2149186105.jpg",
+            "rating": 5,
+            "text": "Best online shopping experience! Great customer service and beautiful products that match the photos perfectly.",
+            "author": "Michael Chen"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_U9GiaV",
+        "testimonial_w9WnAf",
+        "testimonial_NP4Ybi"
+      ],
+      "name": "Testimonials",
+      "settings": {
+        "heading": "<strong>Testimonial</strong>",
+        "heading_size": "h1",
+        "subheading": "Customer testimonials showcasing real experiences, building trust and confidence in our products.",
+        "color_scheme": "scheme-4",
+        "autoplay": true,
+        "autoplay_delay": 5,
+        "loop": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "email_signup_banner_f3Pw9M": {
       "type": "email-signup-banner",
       "blocks": {
@@ -547,7 +521,6 @@
     "infinite_announcement_rGtGJB",
     "image_banner",
     "icon_with_text_D4g3kd",
-    "featured_collection",
     "hero_grid_eVfbBq",
     "product_slider_66QbFH",
     "collection_tab_V8gfnm",
