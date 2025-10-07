@@ -687,12 +687,12 @@
   }
 }
 
-/* Card Alternative Styles */
+/* Card Alternative Styles - Base Structure Only */
+/* Theme settings control colors and border radius via inline styles in snippet */
 
 .card-alternative {
   position: relative;
   background: #ffffff;
-  border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
   overflow: hidden;
@@ -707,7 +707,6 @@
 .card-alternative__media {
   position: relative;
   overflow: hidden;
-  border-radius: 16px 16px 0 0;
   background: #f8f9fa;
 }
 
@@ -772,19 +771,13 @@
   position: absolute;
   top: 12px;
   left: 12px;
-  background: #ff4757;
   color: white;
   padding: 6px 12px;
-  border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   z-index: 2;
-}
-
-.card-alternative__badge--sale {
-  background: #ff4757;
 }
 
 .card-alternative__badge--sold-out {
@@ -859,11 +852,8 @@
 
 .card-alternative__add-to-cart {
   width: 100%;
-  background: #3498db;
-  color: white;
   border: none;
   padding: 10px 16px;
-  border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
@@ -875,9 +865,8 @@
 }
 
 .card-alternative__add-to-cart:hover {
-  background: #2980b9;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .card-alternative__add-to-cart:disabled {

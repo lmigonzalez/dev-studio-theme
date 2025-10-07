@@ -1,0 +1,149 @@
+.image-blocks-section {
+  /* Padding controlled via section settings */
+  padding: 20px 0;
+}
+
+.image-blocks-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--blocks-per-row, 2), 1fr);
+  gap: var(--grid-gap, 20px);
+  margin: 0 auto;
+}
+
+.image-block {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-block__wrapper {
+  position: relative;
+  min-height: 500px;
+  display: flex;
+  width: 100%;
+}
+
+.image-block__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.image-block__background .image-block__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-block__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  display: block;
+}
+
+.image-block__content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: var(--align-items, flex-start);
+  justify-content: var(--justify-content, flex-start);
+  text-align: var(--text-align, left);
+  padding: 40px;
+  width: 100%;
+  gap: 16px;
+}
+
+.image-block__content-wrapper {
+  display: flex;
+  flex-direction: column;
+  text-align: var(--text-align, left);
+}
+
+.image-block__title {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+  max-width: 100%;
+}
+
+.image-block__description {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 100%;
+}
+
+.image-block__button-wrapper {
+  display: block;
+  width: 100%;
+}
+
+.image-block__button {
+  display: inline-block;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  border: none;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 989px) {
+  .image-blocks-grid {
+    grid-template-columns: repeat(min(var(--blocks-per-row, 2), 2), 1fr);
+  }
+
+  .image-block__wrapper {
+    min-height: 350px;
+  }
+
+  .image-block__content {
+    padding: 30px;
+  }
+
+  .image-block__title {
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .image-blocks-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .image-block__wrapper {
+    min-height: 300px;
+  }
+
+  .image-block__content {
+    padding: 24px;
+  }
+
+  .image-block__title {
+    font-size: 24px;
+  }
+
+  .image-block__description {
+    font-size: 14px;
+  }
+
+  .image-block__button {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+}

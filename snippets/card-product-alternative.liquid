@@ -205,9 +205,9 @@
     }
 
     .card-alternative__add-to-cart:hover {
-      background: {{ settings.alternative_card_button_hover_color | default: '#2980b9' }};
+      background: {{ settings.alternative_card_button_hover_color | default: '#2980b9' }} !important;
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba({{ settings.alternative_card_button_color | default: '#3498db' | remove: '#' | prepend: '52, 152, 219' }}, 0.3);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     }
 
     .card-alternative__add-to-cart:disabled {
@@ -275,9 +275,12 @@
   -%}
 
   <div class="card-wrapper product-card-wrapper">
-    <div class="card-alternative">
+    <div class="card-alternative" style="border-radius: {{ settings.alternative_card_border_radius | default: 16 }}px;">
       <!-- Product Image -->
-      <div class="card-alternative__media">
+      <div
+        class="card-alternative__media"
+        style="border-radius: {{ settings.alternative_card_border_radius | default: 16 }}px {{ settings.alternative_card_border_radius | default: 16 }}px 0 0;"
+      >
         {%- if card_product.featured_media -%}
           {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
           <img
@@ -361,7 +364,10 @@
             | times: 100
             | divided_by: card_product.compare_at_price
           -%}
-          <div class="card-alternative__badge card-alternative__badge--sale">
+          <div
+            class="card-alternative__badge card-alternative__badge--sale"
+            style="background: {{ settings.alternative_card_badge_color | default: '#ff4757' }}; border-radius: {{ settings.alternative_card_badge_border_radius | default: 20 }}px;"
+          >
             -{{ discount_percentage }}% {{ 'products.product.on_sale' | t }}
           </div>
         {%- endif -%}
@@ -426,11 +432,13 @@
             id="product-form-{{ card_product.id }}"
             class="form"
             data-type="add-to-cart-form"
+            onsubmit="return false;"
           >
             <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
             <button
-              type="submit"
+              type="button"
               class="card-alternative__add-to-cart"
+              style="background: {{ settings.alternative_card_button_color | default: '#3498db' }}; color: {{ settings.alternative_card_button_text_color | default: 'white' }}; border-radius: {{ settings.alternative_card_button_border_radius | default: 8 }}px;"
               {% unless card_product.selected_or_first_available_variant.available %}
                 disabled
               {% endunless %}
@@ -452,8 +460,11 @@
 {%- else -%}
   <!-- Placeholder Card -->
   <div class="card-wrapper product-card-wrapper">
-    <div class="card-alternative">
-      <div class="card-alternative__media">
+    <div class="card-alternative" style="border-radius: {{ settings.alternative_card_border_radius | default: 16 }}px;">
+      <div
+        class="card-alternative__media"
+        style="border-radius: {{ settings.alternative_card_border_radius | default: 16 }}px {{ settings.alternative_card_border_radius | default: 16 }}px 0 0;"
+      >
         {%- if placeholder_image -%}
           {{ placeholder_image | placeholder_svg_tag: 'placeholder-svg' }}
         {%- else -%}
@@ -472,53 +483,14 @@
         <div class="card-alternative__price">
           <span class="card-alternative__price-current">{{ 1999 | money }}</span>
         </div>
-        <button class="card-alternative__add-to-cart" disabled>Add to cart</button>
+        <button
+          class="card-alternative__add-to-cart"
+          style="background: {{ settings.alternative_card_button_color | default: '#3498db' }}; color: {{ settings.alternative_card_button_text_color | default: 'white' }}; border-radius: {{ settings.alternative_card_button_border_radius | default: 8 }}px;"
+          disabled
+        >
+          Add to cart
+        </button>
       </div>
     </div>
   </div>
 {%- endif -%}
-
-{%- unless skip_styles -%}
-  <script>
-    if (typeof addToCart === 'undefined') {
-      function addToCart(event, productId) {
-        event.preventDefault();
-        const form = event.target.closest('form');
-        const button = event.target;
-
-        // Show loading state
-        button.classList.add('loading');
-        button.disabled = true;
-
-        // Prepare form data
-        const formData = new FormData(form);
-
-        // Add to cart
-        fetch('{{ routes.cart_add_url }}.js', {
-          method: 'POST',
-          body: formData,
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            // Update cart count if element exists
-            const cartCount = document.querySelector('.cart-count-bubble');
-            if (cartCount) {
-              fetch('{{ routes.cart_url }}.js')
-                .then((response) => response.json())
-                .then((cart) => {
-                  cartCount.textContent = cart.item_count;
-                });
-            }
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-          })
-          .finally(() => {
-            // Reset button state
-            button.classList.remove('loading');
-            button.disabled = false;
-          });
-      }
-    }
-  </script>
-{%- endunless -%}
