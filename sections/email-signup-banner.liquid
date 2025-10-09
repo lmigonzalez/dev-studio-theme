@@ -24,6 +24,27 @@
       display: block;
     }
   {%- endif -%}
+
+  #Banner-{{ section.id }} .newsletter-form__button {
+    background-color: {{ section.settings.button_background_color }} !important;
+    color: {{ section.settings.button_text_color }} !important;
+  }
+
+  #Banner-{{ section.id }} .newsletter-form__button:hover {
+    opacity: 0.85;
+  }
+
+  #Banner-{{ section.id }} .email-signup-banner__wrapper {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    #Banner-{{ section.id }} .email-signup-banner__wrapper {
+      padding-top: {{ section.settings.padding_top | times: 0.75 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 }}px;
+    }
+  }
 {%- endstyle -%}
 
 <div
@@ -208,6 +229,46 @@
       ],
       "default": "medium",
       "label": "Banner Height"
+    },
+    {
+      "type": "header",
+      "content": "Subscribe Button Colors"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 64
     }
   ],
   "blocks": [

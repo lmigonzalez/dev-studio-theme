@@ -1,4 +1,3 @@
-
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -20,7 +19,7 @@
   .product-showcase__header {
     text-align: center;
     margin-bottom: 60px;
-  
+
   }
 
   .product-showcase__label {
@@ -72,8 +71,7 @@
   }
 
   .product-showcase__feature:hover {
-    border-color: rgba(var(--color-foreground), 0.3);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    /* border-color: rgba(var(--color-foreground), 0.3); */
     transform: translateY(-5px);
   }
 
@@ -134,16 +132,19 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    opacity: 0;
     transition: all 0.3s ease;
     pointer-events: none;
     z-index: 10;
+    opacity: 0;
+    text-decoration: none;
   }
 
   .product-showcase__image-container:hover .product-showcase__button {
     opacity: 1;
     pointer-events: auto;
     transform: translate(-50%, -50%) scale(1.05);
+    background-color: {{ section.settings.button_hover_color }} !important;
+
   }
 
   .product-showcase__button-link {
@@ -153,23 +154,17 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    border-radius: 6px;
+    border-radius: var(--buttons-radius-outset);
     transition: all 0.3s ease;
     font-size: 13px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    border: 2px solid transparent;
     min-width: 140px;
     text-align: center;
-    backdrop-filter: blur(8px);
-    background-color: rgba(255, 255, 255, 0.9);
-    color: #000000;
   }
 
   .product-showcase__button-link:hover {
-    transform: scale(1.08);
-    background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-    border-color: rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+    background-color: {{ section.settings.button_hover_color }} !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   }
 
   @media screen and (max-width: 989px) {
@@ -208,7 +203,6 @@
       padding: 10px 20px;
       font-size: 12px;
       min-width: 120px;
-      backdrop-filter: blur(6px);
     }
   }
 {%- endstyle -%}
@@ -218,7 +212,10 @@
     <div class="page-width">
       <div class="product-showcase">
         {%- unless section.settings.heading == blank -%}
-          <div class="title-wrapper{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" style="text-align: center;">
+          <div
+            class="title-wrapper{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            style="text-align: center;"
+          >
             <h2 class="title inline-richtext {{ section.settings.heading_size }}">
               {{ section.settings.heading }}
             </h2>
@@ -293,10 +290,14 @@
                   {{ 'product-1' | placeholder_svg_tag: 'product-showcase__image' }}
                 {%- endif -%}
 
-                <div class="product-showcase__button">
+                <div
+                  class="product-showcase__button product-showcase__button-link"
+                  style="background-color: {{ section.settings.button_background_color }} !important; "
+                >
                   <a
                     href="{{ product.url }}"
-                    class="product-showcase__button-link"
+                    class=""
+                    style="text-decoration: none; color: {{ section.settings.button_text_color }} !important;"
                   >
                     {{ section.settings.button_label }}
                   </a>
@@ -422,6 +423,12 @@
       "id": "button_text_color",
       "label": "Button text color",
       "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Button hover color",
+      "default": "#000000"
     },
     {
       "type": "color_scheme",

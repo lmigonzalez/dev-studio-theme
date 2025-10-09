@@ -4,6 +4,7 @@
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    background: {{ section.settings.section_background_color }};
   }
 
   @media screen and (min-width: 750px) {
@@ -82,7 +83,8 @@
   }
 
   .faq-item {
-    background: #F5F5F5;
+    background: {{ section.settings.block_background_color }};
+    color: {{ section.settings.block_text_color }};
     border-radius: {{ section.settings.block_border_radius }}px;
     overflow: hidden;
   }
@@ -103,7 +105,8 @@
 
   .faq-item__number {
     font-size: 1.4rem;
-    color: rgba(var(--color-foreground), 0.5);
+    color: inherit;
+    opacity: 0.5;
     font-weight: 500;
     flex-shrink: 0;
   }
@@ -113,7 +116,7 @@
     margin: 0;
     font-size: 1.6rem;
     font-weight: 500;
-    color: rgb(var(--color-foreground));
+    color: inherit;
   }
 
   .faq-item__icon {
@@ -129,7 +132,8 @@
 
   .faq-item__answer {
     padding: 0 2rem 2rem 5.2rem;
-    color: rgba(var(--color-foreground), 0.75);
+    color: inherit;
+    opacity: 0.75;
     line-height: 1.6;
     font-size: 1.4rem;
   }
@@ -149,81 +153,79 @@
   }
 {%- endstyle -%}
 
-<div class="color-{{ section.settings.section_color_scheme }} gradient">
-  <div class="section-{{ section.id }}-padding">
-    <div class="page-width">
-      <div class="faq-header{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-        <div class="faq-header__content">
-          {%- if section.settings.heading != blank -%}
-            <div class="title-wrapper{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-              <h2 class="title inline-richtext {{ section.settings.heading_size }}">
-                {{ section.settings.heading }}
-              </h2>
-            </div>
-          {%- endif -%}
-          {%- if section.settings.subheading != blank -%}
-            <p
-              class="faq-header__subtitle{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-              {% if settings.animations_reveal_on_scroll %}
-                style="animation-delay: 0.1s;"
-              {% endif %}
-            >
-              {{ section.settings.subheading }}
-            </p>
-          {%- endif -%}
-        </div>
-        {%- if section.settings.button_label != blank -%}
-          <div
-            class="faq-header__button{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-            {% if settings.animations_reveal_on_scroll %}
-              style="animation-delay: 0.2s;"
-            {% endif %}
-          >
-            <a
-              {% if section.settings.button_link == blank %}
-                role="link" aria-disabled="true"
-              {% else %}
-                href="{{ section.settings.button_link }}"
-              {% endif %}
-              class="button button--primary"
-            >
-              {{ section.settings.button_label | escape }}
-            </a>
+<div class="section-{{ section.id }}-padding">
+  <div class="page-width">
+    <div class="faq-header{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      <div class="faq-header__content">
+        {%- if section.settings.heading != blank -%}
+          <div class="title-wrapper{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+            <h2 class="title inline-richtext {{ section.settings.heading_size }}">
+              {{ section.settings.heading }}
+            </h2>
           </div>
         {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p
+            class="faq-header__subtitle{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              style="animation-delay: 0.1s;"
+            {% endif %}
+          >
+            {{ section.settings.subheading }}
+          </p>
+        {%- endif -%}
       </div>
-
-      {%- if section.blocks.size > 0 -%}
-        <div class="faq-grid">
-          {%- for block in section.blocks -%}
-            {%- case block.type -%}
-              {%- when 'question' -%}
-                <details
-                  class="faq-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}"
-                  {{ block.shopify_attributes }}
-                  {% if settings.animations_reveal_on_scroll %}
-                    data-cascade
-                    style="animation-delay: {{ forloop.index0 | times: 0.1 }}s;"
-                  {% endif %}
-                >
-                  <summary class="faq-item__summary">
-                    <span class="faq-item__number">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
-                    <h3 class="faq-item__question">{{ block.settings.question }}</h3>
-                    <svg class="faq-item__icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </summary>
-                  {%- if block.settings.answer != blank -%}
-                    <div class="faq-item__answer">
-                      {{ block.settings.answer }}
-                    </div>
-                  {%- endif -%}
-                </details>
-            {%- endcase -%}
-          {%- endfor -%}
+      {%- if section.settings.button_label != blank -%}
+        <div
+          class="faq-header__button{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            style="animation-delay: 0.2s;"
+          {% endif %}
+        >
+          <a
+            {% if section.settings.button_link == blank %}
+              role="link" aria-disabled="true"
+            {% else %}
+              href="{{ section.settings.button_link }}"
+            {% endif %}
+            class="button button--primary faq-header__button"
+          >
+            {{ section.settings.button_label | escape }}
+          </a>
         </div>
       {%- endif -%}
     </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="faq-grid">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'question' -%}
+              <details
+                class="faq-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}"
+                {{ block.shopify_attributes }}
+                {% if settings.animations_reveal_on_scroll %}
+                  data-cascade
+                  style="animation-delay: {{ forloop.index0 | times: 0.1 }}s;"
+                {% endif %}
+              >
+                <summary class="faq-item__summary">
+                  <span class="faq-item__number">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                  <h3 class="faq-item__question">{{ block.settings.question }}</h3>
+                  <svg class="faq-item__icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </summary>
+                {%- if block.settings.answer != blank -%}
+                  <div class="faq-item__answer">
+                    {{ block.settings.answer }}
+                  </div>
+                {%- endif -%}
+              </details>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -293,10 +295,15 @@
       "label": "Heading size"
     },
     {
-      "type": "color_scheme",
-      "id": "section_color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-1"
+      "type": "header",
+      "content": "Section colors"
+    },
+    {
+      "type": "color",
+      "id": "section_background_color",
+      "label": "Section background color",
+      "default": "#FFFFFF",
+      "info": "Background color for the entire FAQ section"
     },
     {
       "type": "header",
@@ -332,6 +339,24 @@
       "label": "Block border radius",
       "default": 8,
       "info": "Controls the corner radius of FAQ blocks"
+    },
+    {
+      "type": "header",
+      "content": "Block colors"
+    },
+    {
+      "type": "color",
+      "id": "block_background_color",
+      "label": "Block background color",
+      "default": "#F5F5F5",
+      "info": "Background color for all FAQ blocks"
+    },
+    {
+      "type": "color",
+      "id": "block_text_color",
+      "label": "Block text color",
+      "default": "#000000",
+      "info": "Text color for all FAQ blocks"
     }
   ],
   "blocks": [

@@ -33,7 +33,10 @@
   -%}
 
   <div class="card-wrapper product-card-wrapper">
-    <div class="card-alternative" style="--alternative-card-border-radius: {{ settings.alternative_card_border_radius | default: 16 }}px; --alternative-card-badge-color: {{ settings.alternative_card_badge_color | default: '#ff4757' }}; --alternative-card-badge-border-radius: {{ settings.alternative_card_badge_border_radius | default: 20 }}px; --alternative-card-button-color: {{ settings.alternative_card_button_color | default: '#3498db' }}; --alternative-card-button-text-color: {{ settings.alternative_card_button_text_color | default: 'white' }}; --alternative-card-button-border-radius: {{ settings.alternative_card_button_border_radius | default: 8 }}px; --alternative-card-button-hover-color: {{ settings.alternative_card_button_hover_color | default: '#2980b9' }};">
+    <div
+      class="card-alternative"
+      style="--alternative-card-border-radius: {{ settings.alternative_card_border_radius | default: 16 }}px; --alternative-card-badge-color: {{ settings.alternative_card_badge_color | default: '#ff4757' }}; --alternative-card-badge-border-radius: {{ settings.alternative_card_badge_border_radius | default: 20 }}px; --alternative-card-button-color: {{ settings.alternative_card_button_color | default: '#3498db' }}; --alternative-card-button-text-color: {{ settings.alternative_card_button_text_color | default: '#ffffff' }}; --alternative-card-button-border-radius: {{ settings.buttons_radius | default: 8 }}px; --alternative-card-button-hover-color: {{ settings.alternative_card_button_hover_color | default: '#2980b9' }};"
+    >
       <!-- Product Image -->
       <div
         class="card-alternative__media"
@@ -196,7 +199,7 @@
             <button
               type="button"
               class="card-alternative__add-to-cart"
-              style="background: var(--alternative-card-button-color, #3498db); color: var(--alternative-card-button-text-color, white); border-radius: var(--alternative-card-button-border-radius, 8px);"
+              style="background-color: {{ settings.alternative_card_button_color | default: '#3498db' }} !important; color: {{ settings.alternative_card_button_text_color | default: '#ffffff' }} !important;"
               {% unless card_product.selected_or_first_available_variant.available %}
                 disabled
               {% endunless %}
@@ -218,7 +221,10 @@
 {%- else -%}
   <!-- Placeholder Card -->
   <div class="card-wrapper product-card-wrapper">
-    <div class="card-alternative" style="--alternative-card-border-radius: {{ settings.alternative_card_border_radius | default: 16 }}px; --alternative-card-badge-color: {{ settings.alternative_card_badge_color | default: '#ff4757' }}; --alternative-card-badge-border-radius: {{ settings.alternative_card_badge_border_radius | default: 20 }}px; --alternative-card-button-color: {{ settings.alternative_card_button_color | default: '#3498db' }}; --alternative-card-button-text-color: {{ settings.alternative_card_button_text_color | default: 'white' }}; --alternative-card-button-border-radius: {{ settings.alternative_card_button_border_radius | default: 8 }}px; --alternative-card-button-hover-color: {{ settings.alternative_card_button_hover_color | default: '#2980b9' }};">
+    <div
+      class="card-alternative"
+      style="--alternative-card-border-radius: {{ settings.alternative_card_border_radius | default: 16 }}px; --alternative-card-badge-color: {{ settings.alternative_card_badge_color | default: '#ff4757' }}; --alternative-card-badge-border-radius: {{ settings.alternative_card_badge_border_radius | default: 20 }}px; --alternative-card-button-color: {{ settings.alternative_card_button_color | default: '#3498db' }}; --alternative-card-button-text-color: {{ settings.alternative_card_button_text_color | default: '#ffffff' }}; --alternative-card-button-border-radius: {{ settings.buttons_radius | default: 8 }}px; --alternative-card-button-hover-color: {{ settings.alternative_card_button_hover_color | default: '#2980b9' }};"
+    >
       <div
         class="card-alternative__media"
         style="border-radius: var(--alternative-card-border-radius, 16px) var(--alternative-card-border-radius, 16px) 0 0;"
@@ -243,7 +249,7 @@
         </div>
         <button
           class="card-alternative__add-to-cart"
-          style="background: var(--alternative-card-button-color, #3498db); color: var(--alternative-card-button-text-color, white); border-radius: var(--alternative-card-button-border-radius, 8px);"
+          style="background-color: {{ settings.alternative_card_button_color | default: '#3498db' }} !important; color: {{ settings.alternative_card_button_text_color | default: '#ffffff' }} !important;"
           disabled
         >
           Add to cart

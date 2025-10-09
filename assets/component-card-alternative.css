@@ -168,9 +168,10 @@
 
 .card-alternative__add-to-cart {
   width: 100%;
-  background: var(--alternative-card-button-color, #3498db);
-  color: var(--alternative-card-button-text-color, white);
-  border: none;
+  background: var(--alternative-card-button-color, #3498db) !important;
+  background-color: var(--alternative-card-button-color, #3498db) !important;
+  color: var(--alternative-card-button-text-color, white) !important;
+  border: none !important;
   padding: 10px 16px;
   border-radius: var(--alternative-card-button-border-radius, 8px);
   font-size: 13px;
@@ -178,22 +179,46 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
   position: relative;
   overflow: hidden;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.card-alternative__add-to-cart::before,
+.card-alternative__add-to-cart::after {
+  content: none !important;
+  display: none !important;
 }
 
 .card-alternative__add-to-cart:hover {
-  background: var(--alternative-card-button-hover-color, #2980b9) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  background-color: var(--alternative-card-button-hover-color, #2980b9) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
+}
+
+.card-alternative__add-to-cart:hover::before,
+.card-alternative__add-to-cart:hover::after {
+  content: none !important;
+  display: none !important;
 }
 
 .card-alternative__add-to-cart:disabled {
-  background: #6c757d;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+  background-color: #6c757d !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+}
+
+.card-alternative__add-to-cart:disabled::before,
+.card-alternative__add-to-cart:disabled::after {
+  content: none !important;
+  display: none !important;
 }
 
 .card-alternative__add-to-cart .loading-spinner {

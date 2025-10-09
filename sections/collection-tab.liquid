@@ -30,16 +30,35 @@
       >
         {%- for block in section.blocks -%}
           {%- if block.type == 'tab' -%}
+            {%- liquid
+              # Auto-generate tab_name from collection if not provided
+              assign tab_name = block.settings.tab_name
+              if tab_name == blank and block.settings.collection != blank
+                assign tab_name = block.settings.collection.title
+              endif
+
+              # Auto-generate tab_id from collection handle or use provided one
+              assign tab_id = block.settings.tab_id
+              if tab_id == blank and block.settings.collection != blank
+                assign tab_id = block.settings.collection.handle
+              elsif tab_id == blank
+                assign tab_id = 'tab-' | append: block.id
+              endif
+            -%}
             <button
               class="product-tabs__tab{% if forloop.first %} product-tabs__tab--active{% endif %}{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}"
-              data-tab="{{ block.settings.tab_id }}"
+              data-tab="{{ tab_id }}"
               role="tab"
               aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-              aria-controls="tab-panel-{{ block.settings.tab_id }}"
-              id="tab-{{ block.settings.tab_id }}"
+              aria-controls="tab-panel-{{ tab_id }}"
+              id="tab-{{ tab_id }}"
               {{ block.shopify_attributes }}
             >
-              {{ block.settings.tab_name }}
+              {% if block.settings.tab_name == blank %}
+                {{ block.settings.collection.title }}
+              {% else %}
+                {{ block.settings.tab_name }}
+              {% endif %}
             </button>
           {%- endif -%}
         {%- endfor -%}
@@ -47,16 +66,25 @@
 
       {%- for block in section.blocks -%}
         {%- if block.type == 'tab' -%}
+          {%- liquid
+            # Auto-generate tab_id from collection handle or use provided one (same logic as above)
+            assign tab_id = block.settings.tab_id
+            if tab_id == blank and block.settings.collection != blank
+              assign tab_id = block.settings.collection.handle
+            elsif tab_id == blank
+              assign tab_id = 'tab-' | append: block.id
+            endif
+          -%}
           <div
             class="product-tabs__content{% if forloop.first %} product-tabs__content--active{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-            data-tab-content="{{ block.settings.tab_id }}"
+            data-tab-content="{{ tab_id }}"
             role="tabpanel"
-            aria-labelledby="tab-{{ block.settings.tab_id }}"
-            id="tab-panel-{{ block.settings.tab_id }}"
+            aria-labelledby="tab-{{ tab_id }}"
+            id="tab-panel-{{ tab_id }}"
             aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
             {{ block.shopify_attributes }}
           >
-            <div class="swiper product-tabs-swiper" id="ProductTabsSwiper-{{ section.id }}-{{ block.settings.tab_id }}">
+            <div class="swiper product-tabs-swiper" id="ProductTabsSwiper-{{ section.id }}-{{ tab_id }}">
               <div class="swiper-wrapper">
                 {%- for product in block.settings.collection.products limit: block.settings.products_to_show -%}
                   <div class="swiper-slide">
@@ -375,6 +403,39 @@
       initProductTabs();
     }
   })();
+
+  // Auto-populate tab name and ID when collection is selected in theme editor
+  if (Shopify.designMode) {
+    document.addEventListener('shopify:block:select', function(event) {
+      const sectionId = '{{ section.id }}';
+      if (event.detail.sectionId === sectionId) {
+        // Small delay to ensure the DOM is updated
+        setTimeout(function() {
+          autoPopulateTabFields(event.target);
+        }, 100);
+      }
+    });
+
+    // Watch for changes in the theme editor
+    document.addEventListener('shopify:inspector:activate', function(event) {
+      const sectionId = '{{ section.id }}';
+      if (event.detail && event.detail.sectionId === sectionId) {
+        setTimeout(function() {
+          const activeBlock = document.querySelector('[data-section-id="' + sectionId + '"]');
+          if (activeBlock) {
+            autoPopulateTabFields(activeBlock);
+          }
+        }, 100);
+      }
+    });
+
+    function autoPopulateTabFields(blockElement) {
+      // This function helps auto-populate based on the collection selected
+      // The actual auto-population happens via the liquid template on page reload
+      // This serves as a helper to remind merchants to refresh if needed
+      console.log('Collection tab updated. Tab name and ID will be auto-generated from collection name.');
+    }
+  }
 </script>
 
 {% schema %}
@@ -483,22 +544,21 @@
       "name": "Product Tab",
       "settings": [
         {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
           "type": "text",
           "id": "tab_name",
           "label": "Tab name",
-          "default": "Best Sellers"
+          "info": "Leave empty to automatically use the collection name"
         },
         {
           "type": "text",
           "id": "tab_id",
           "label": "Tab ID",
-          "default": "best-sellers",
-          "info": "Unique identifier for this tab (use lowercase, no spaces)"
-        },
-        {
-          "type": "collection",
-          "id": "collection",
-          "label": "Collection"
+          "info": "Leave empty to auto-generate a unique ID from the collection"
         },
         {
           "type": "range",
@@ -530,18 +590,10 @@
       "category": "Custom",
       "blocks": [
         {
-          "type": "tab",
-          "settings": {
-            "tab_name": "Best Sellers",
-            "tab_id": "best-sellers"
-          }
+          "type": "tab"
         },
         {
-          "type": "tab",
-          "settings": {
-            "tab_name": "Novelties",
-            "tab_id": "novelties"
-          }
+          "type": "tab"
         }
       ]
     }
